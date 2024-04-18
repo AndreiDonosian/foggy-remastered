@@ -1,0 +1,16 @@
+{
+  "resources/css/style.css": {
+    "file": "assets/style-DuhyhT3S.css",
+    "src": "resources/css/style.css",
+    "isEntry": true
+  },
+  "resources/img/logo-desktop-full.png": {
+    "file": "assets/logo-desktop-full-MQHYVJdW.png",
+    "src": "resources/img/logo-desktop-full.png"
+  },
+  "resources/js/init.js": {
+    "file": "assets/init-ChCM4K_o.js",
+    "src": "resources/js/init.js",
+    "isEntry": true
+  }
+}

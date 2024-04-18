@@ -1,0 +1,23 @@
+{
+    "private": true,
+    "type": "module",
+    "version": "1.0.0",
+    "scripts": {
+        "clean": "rimraf public/build",
+        "dev": "vite",
+        "build": "npm run clean && vite build",
+        "build-rtl": "rtlcss public/build/css/app.min.css & rtlcss public/build/css/bootstrap.min.css"
+    },
+    "devDependencies": {
+        "@popperjs/core": "^2.11.6",
+        "axios": "^1.6.4",
+        "bootstrap": "^5.2.3",
+        "laravel-vite-plugin": "^1.0",
+        "sass": "^1.56.1",
+        "vite": "^5.0"
+    },
+    "dependencies": {
+        "fs-extra": "^11.2.0",
+        "rimraf": "^5.0.5"
+    }
+}
