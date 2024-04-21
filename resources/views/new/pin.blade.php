@@ -24,13 +24,50 @@
                         </label>
                     </div>
                 </div>
-
+                <style>
+                    .pin-button {
+                        margin:10px;
+                        cursor: pointer;
+                    }
+                    .include_area {
+                        text-align: center;
+                    }
+                    .pin-handler{
+                        padding-top:20px;display: flex;width: auto;margin: 0 auto;max-width: 290px;
+                    }
+                </style>
                 <div class="header_bottom">
                     <div class="include_area">
                         @csrf
-                        <textarea id="fn__include_textarea" rows="1"></textarea>
-                        <textarea class="fn__hidden_textarea" rows="1" tabindex="-1"></textarea>
+                        <input type="search" id="fn__include_textarea" value=""/>
+
+                        <div class="pin-handler">
+                            <div>
+                                <button class="techwave_fn_button pin-button" data-value="1">1</button>
+                                <button class="techwave_fn_button pin-button" data-value="2">2</button>
+                                <button class="techwave_fn_button pin-button" data-value="3">3</button>
+                            </div>
+                            <div>
+                                <button class="techwave_fn_button pin-button" data-value="4">4</button>
+                                <button class="techwave_fn_button pin-button" data-value="5">5</button>
+                                <button class="techwave_fn_button pin-button" data-value="6">6</button>
+                            </div>
+                            <div>
+                                <button class="techwave_fn_button pin-button" data-value="7">7</button>
+                                <button class="techwave_fn_button pin-button" data-value="8">8</button>
+                                <button class="techwave_fn_button pin-button" data-value="9">9</button>
+                            </div>
+
+                        </div>
+                        <script type="text/javascript">
+                            document.querySelectorAll('.pin-button').forEach(e=>{
+                                e.addEventListener('click', f=>{
+                                    document.querySelector('#fn__include_textarea').value += f.target.getAttribute('data-value')
+                                })
+                            })
+                        </script>
                     </div>
+
                     <div class="generate_section">
                         <a id="generate_it" href="javascript:void(0);" class="techwave_fn_button"><span>Show data</span></a>
                     </div>
@@ -44,6 +81,8 @@
         </div>
     </div>
     <script type="text/javascript">
+        let staticHeight = 442;
+
         document.querySelector('#generate_it').addEventListener('click', event=>{
             event.preventDefault();
             if(!document.querySelector('#fn__include_textarea').value) {
@@ -53,7 +92,16 @@
                 method: "GET",
             })
                 .then(async (response) => {
-                    document.querySelector('.generation_history').innerHTML = await response.text();;
+                    document.querySelector('.generation_history').innerHTML = await response.text();
+                    document.querySelector('.generation_header').style.zIndex = -1;
+                    document.querySelector('.generation_header').style.overflow = 'hidden';
+                    let tInterHide = setInterval(function (){
+                        document.querySelector('.generation_header').style.height = (staticHeight-=4)+'px';
+                        if(staticHeight<=0) {
+                            document.querySelector('.filter__upscaled').style.display = 'none';
+                            clearInterval(tInterHide);
+                        }
+                    }, 1)
                 });
         })
         document.addEventListener('click', async e=>{

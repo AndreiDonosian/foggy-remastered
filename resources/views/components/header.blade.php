@@ -78,15 +78,19 @@
                 </a>
                 <div class="item_popup" data-position="right">
                     <ul>
-                        <li>
-                            <span class="active">English</span>
-                        </li>
-                        <li>
-                            <a href="javascript:void(0);">Spanish</a>
-                        </li>
-                        <li>
-                            <a href="javascript:void(0);">French</a>
-                        </li>
+                        @foreach(['en', 'ru'] as $_lang)
+                            <li>
+                                @if($_lang==App::getLocale())
+                                <span class="active">{{$_lang}}</span>
+                                    @else
+                                    <a href="{{url(request()->path().'?lang='.$_lang)}}">{{$_lang}}</a>
+                                @endif
+                            </li>
+                        @endforeach
+
+{{--                        <li>--}}
+{{--                            <a href="javascript:void(0);">French</a>--}}
+{{--                        </li>--}}
                     </ul>
                 </div>
             </div>
@@ -120,14 +124,14 @@
                     <div class="user_nav">
                         <ul>
                             <li>
-                                <a href="{{ url('/user-profile') }}">
+                                <a href="{{ route('profile.info') }}">
                                     <span class="icon"><img src="{{ URL::asset('build/svg/person.svg') }}" alt=""
                                             class="fn__svg"></span>
                                     <span class="text">Profile</span>
                                 </a>
                             </li>
                             <li>
-                                <a href="{{ url('/user-settings') }}">
+                                <a href="{{ route('profile.settings') }}">
                                     <span class="icon"><img src="{{ URL::asset('build/svg/setting.svg') }}" alt=""
                                             class="fn__svg"></span>
                                     <span class="text">Settings</span>

@@ -4,14 +4,17 @@
 
     <!-- logo (left panel) -->
     <div class="leftpanel_logo">
-        <a href="{{ url('/index') }}" class="fn_logo">
+{{--        <a href="{{ url('/index') }}" class="fn_logo">--}}
             <span class="full_logo">
-                <img src="{{ URL::asset('build/img/logo-desktop-full.png') }}" alt="" class="desktop_logo">
-                <img src="{{ URL::asset('build/img/logo-retina-full.png') }}" alt="" class="retina_logo">
+{{--                <img src="{{ URL::asset('build/img/logo-desktop-full.png') }}" alt="" class="desktop_logo">--}}
+                <img width="200px" src="{{ URL::asset('build/img/logo_avks.svg') }}" alt="" class="retina_logo">
             </span>
-            <span class="short_logo">
-                <img src="{{ URL::asset('build/img/logo-desktop-mini.png') }}" alt="" class="desktop_logo">
-                <img src="{{ URL::asset('build/img/logo-retina-mini.png') }}" alt="" class="retina_logo">
+            <span class="short_logo" style="background: url('{{ URL::asset('build/img/logo_avks.svg') }}');
+            background-position: left;
+            background-size: cover;width:60px;height:45px;
+            background-repeat: no-repeat;">
+{{--                <img src="{{ URL::asset('build/img/logo-desktop-mini.png') }}" alt="" class="desktop_logo">--}}
+{{--                <img src="{{ URL::asset('build/img/logo-retina-mini.png') }}" alt="" class="retina_logo">--}}
             </span>
         </a>
         <a href="javascript:void(0);" class="fn__closer fn__icon_button desktop_closer">
@@ -31,7 +34,7 @@
             <h2 class="group__title">Start Here</h2>
             <ul class="group__list">
                 <li>
-                    <a href="{{ url('/pin') }}" class="fn__tooltip active menu__item" data-position="right"
+                    <a href="{{ route('pin') }}" class="fn__tooltip active menu__item" data-position="right"
                         title="Home">
                         <span class="icon">
                             <img src="{{ URL::asset('build/svg/home.svg') }}" alt="" class="fn__svg">
@@ -39,61 +42,61 @@
                         <span class="text">Pin (Implemented)</span>
                     </a>
                 </li>
-                <li>
-                    <a href="{{ url('/community-feed') }}" class="fn__tooltip menu__item" data-position="right"
-                        title="Community Feed">
-                        <span class="icon">
-                            <img src="{{ URL::asset('build/svg/community.svg') }}" alt="" class="fn__svg">
-                        </span>
-                        <span class="text">Community Feed</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="{{ url('/personal-feed') }}" class="fn__tooltip menu__item" data-position="right"
-                        title="Personal Feed">
-                        <span class="icon">
-                            <img src="{{ URL::asset('build/svg/person.svg') }}" alt="" class="fn__svg">
-                        </span>
-                        <span class="text">Personal Feed<span class="count">48</span></span>
-                    </a>
-                </li>
-                <li>
-                    <a href="{{ url('/models') }}" class="fn__tooltip menu__item" data-position="right"
-                        title="Finetuned Models">
-                        <span class="icon">
-                            <img src="{{ URL::asset('build/svg/cube.svg') }}" alt="" class="fn__svg">
-                        </span>
-                        <span class="text">Finetuned Models</span>
-                    </a>
-                </li>
+{{--                <li>--}}
+{{--                    <a href="{{ url('/community-feed') }}" class="fn__tooltip menu__item" data-position="right"--}}
+{{--                        title="Community Feed">--}}
+{{--                        <span class="icon">--}}
+{{--                            <img src="{{ URL::asset('build/svg/community.svg') }}" alt="" class="fn__svg">--}}
+{{--                        </span>--}}
+{{--                        <span class="text">Community Feed</span>--}}
+{{--                    </a>--}}
+{{--                </li>--}}
+{{--                <li>--}}
+{{--                    <a href="{{ url('/personal-feed') }}" class="fn__tooltip menu__item" data-position="right"--}}
+{{--                        title="Personal Feed">--}}
+{{--                        <span class="icon">--}}
+{{--                            <img src="{{ URL::asset('build/svg/person.svg') }}" alt="" class="fn__svg">--}}
+{{--                        </span>--}}
+{{--                        <span class="text">Personal Feed<span class="count">48</span></span>--}}
+{{--                    </a>--}}
+{{--                </li>--}}
+{{--                <li>--}}
+{{--                    <a href="{{ url('/models') }}" class="fn__tooltip menu__item" data-position="right"--}}
+{{--                        title="Finetuned Models">--}}
+{{--                        <span class="icon">--}}
+{{--                            <img src="{{ URL::asset('build/svg/cube.svg') }}" alt="" class="fn__svg">--}}
+{{--                        </span>--}}
+{{--                        <span class="text">Finetuned Models</span>--}}
+{{--                    </a>--}}
+{{--                </li>--}}
             </ul>
         </div>
         <!-- !#1 navigation group -->
 
         <!-- #2 navigation group -->
-        <div class="nav_group">
-            <h2 class="group__title">User Tools</h2>
-            <ul class="group__list">
-                <li>
-                    <a href="{{ url('/image-generation') }}" class="fn__tooltip menu__item" data-position="right"
-                        title="Image Generation">
-                        <span class="icon">
-                            <img src="{{ URL::asset('build/svg/image.svg') }}" alt="" class="fn__svg">
-                        </span>
-                        <span class="text">Image Generation</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="{{ url('/ai-chat-bot') }}" class="fn__tooltip menu__item" data-position="right"
-                        title="AI Chat Bot">
-                        <span class="icon">
-                            <img src="{{ URL::asset('build/svg/chat.svg') }}" alt="" class="fn__svg">
-                        </span>
-                        <span class="text">AI Chat Bot</span>
-                    </a>
-                </li>
-            </ul>
-        </div>
+{{--        <div class="nav_group">--}}
+{{--            <h2 class="group__title">User Tools</h2>--}}
+{{--            <ul class="group__list">--}}
+{{--                <li>--}}
+{{--                    <a href="{{ url('/image-generation') }}" class="fn__tooltip menu__item" data-position="right"--}}
+{{--                        title="Image Generation">--}}
+{{--                        <span class="icon">--}}
+{{--                            <img src="{{ URL::asset('build/svg/image.svg') }}" alt="" class="fn__svg">--}}
+{{--                        </span>--}}
+{{--                        <span class="text">Image Generation</span>--}}
+{{--                    </a>--}}
+{{--                </li>--}}
+{{--                <li>--}}
+{{--                    <a href="{{ url('/ai-chat-bot') }}" class="fn__tooltip menu__item" data-position="right"--}}
+{{--                        title="AI Chat Bot">--}}
+{{--                        <span class="icon">--}}
+{{--                            <img src="{{ URL::asset('build/svg/chat.svg') }}" alt="" class="fn__svg">--}}
+{{--                        </span>--}}
+{{--                        <span class="text">AI Chat Bot</span>--}}
+{{--                    </a>--}}
+{{--                </li>--}}
+{{--            </ul>--}}
+{{--        </div>--}}
         <!-- !#2 navigation group -->
 
         <!-- #3 navigation group -->

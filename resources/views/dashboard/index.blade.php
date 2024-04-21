@@ -20,28 +20,12 @@
                     <ul>
                         <li>
                             <div class="item">
-                                <a href="{{ url('/image-generation') }}">
+                                <a href="{{ url('/pin') }}">
                                     <span class="icon">
                                         <img src="{{ URL::asset('build/svg/image.svg') }}" alt="" class="fn__svg">
                                     </span>
-                                    <h2 class="title">Image Generation</h2>
-                                    <p class="desc">This field of AI combines deep learning algorithms and generative
-                                        models to create new images that resemble real-world photographs or exhibit
-                                        creative and imaginative qualities.</p>
-                                    <span class="arrow"><img src="{{ URL::asset('build/svg/arrow.svg') }}" alt="" class="fn__svg"></span>
-                                </a>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="item">
-                                <a href="{{ url('/ai-chat-bot') }}">
-                                    <span class="icon">
-                                        <img src="{{ URL::asset('build/svg/chat.svg') }}" alt="" class="fn__svg">
-                                    </span>
-                                    <h2 class="title">AI Chat Bot</h2>
-                                    <p class="desc">An AI chatbot, short for artificial intelligence chatbot, is a
-                                        computer program designed to simulate human-like conversations and provide
-                                        automated responses to user queries or prompts. </p>
+                                    <h2 class="title">{{__('welcome.pin_creation_title')}}</h2>
+                                    <p class="desc">{{__('welcome.pin_creation_descr')}}</p>
                                     <span class="arrow"><img src="{{ URL::asset('build/svg/arrow.svg') }}" alt="" class="fn__svg"></span>
                                 </a>
                             </div>

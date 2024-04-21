@@ -2042,4 +2042,3 @@ var FrenifyTechWaveTime = new Date();
     $('.leftpanel_content a.menu__item[href="' + activePath + '"]').addClass('active');
 
 })(jQuery);
-
