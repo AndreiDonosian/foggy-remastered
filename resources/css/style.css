@@ -723,7 +723,7 @@ frenify_typing span{
 	margin-left: 10px;
 	display: inline-block;
 	height: 24px;
-	background-color: #ab0cdf;
+	background-color: #4CBD3F;
 	color: #fff;
 	font-weight: 500;
 	line-height: 25px;
@@ -1085,7 +1085,7 @@ frenify_typing span{
 	display: inline-block;
 	padding: 0 5px;
 	border-radius: 5px;
-	background-color: #ab0cdf;
+	background-color: #4CBD3F;
 	color: #fff;
 	font-weight: 500;
 	font-size: 11px;
@@ -3566,7 +3566,7 @@ a.fn__like.no_border .fn__svg{
 	position: absolute;
 	top: 0;
 	margin-top: -16px;
-	background-color: #ab0cdf;
+	background-color: #4CBD3F;
 	height: 30px;
 	border-radius: 15px;
 	font-weight: 500;
@@ -3598,7 +3598,7 @@ a.fn__like.no_border .fn__svg{
 	height: 0;
 	border-style: solid;
 	border-width: 4px 6px 0 6px;
-	border-color: #ab0cdf transparent transparent transparent;
+	border-color: #4CBD3F transparent transparent transparent;
 	position: absolute;
 }
 .techwave_fn_pricing .item_row{

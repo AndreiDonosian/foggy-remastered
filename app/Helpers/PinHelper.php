@@ -29,10 +29,10 @@ class PinHelper
 
     public static function getSubFolders(string $pin): string
     {
-        $mainFolder = sha1(auth()->user()->getAttribute('crypt_passcode').auth()->user()->getAttribute('email'). $pin);
+        $mainFolder = sha1(auth()->user()->getAttribute('crypt_passcode'). $pin);
         return substr($mainFolder, 0 ,3).
-            '/'.substr($mainFolder, 3 ,3).'/'.
-            '/'.substr($mainFolder, 6 ,3).'/'.
+            '/'.substr($mainFolder, 3 ,3)
+            .'/'. substr($mainFolder, 6 ,3).'/'.
             $mainFolder;
     }
 }

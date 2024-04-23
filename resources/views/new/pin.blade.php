@@ -107,31 +107,55 @@
         document.addEventListener('click', async e=>{
             if(e.target.closest('.fn__upload')) {
                 if(document.querySelectorAll('.fn__upload textarea').length==0) {
-                    document.querySelector('.fn__upload').innerHTML = '<label>Please use simple(or not) password to encrypt this file</label><textarea id="cryptCode" rows="1"></textarea> <textarea class="fn__hidden_textarea" rows="1" tabindex="-1"></textarea><a href="javascript:void(0);" id="sendFile" class="medium techwave_fn_button"><span>Save</span></a>';
+                    document.querySelector('.fn__upload').innerHTML = '<label>Please use simple(or not) password to encrypt this file</label><textarea id="cryptCode" rows="1"></textarea> <textarea class="fn__hidden_textarea" rows="1" tabindex="-1"></textarea><a href="javascript:void(0);" id="sendFile" class="techwave_fn_button"><span>Save</span></a>';
 
                 }
             }
             if(e.target.id =='sendFile') {
-                document.querySelector('#uploadFile').click();
+                if(typeof uploader=='number') {
+                    uploader = new plupload.Uploader({
+                        browse_button: 'sendFile',
+                        chunk_size: '200kb',
+                        max_retries: 3,
+                        url: '/pin-submit',
+                        autostart: true,
+                        drop_element: document.querySelector('.fn__model_item.new'),
+                    });
+                    uploader.bind('FilesAdded', function (up, file) {
+                        console.log(file)
+                        console.log(uploader.files)
+                        uploader.start();
+                    })
+                    uploader.bind('beforeUpload', function(up, file){
+                        uploader.settings.multipart_params = {
+                            pin : document.querySelector('#pin').value,
+                            crypt : document.querySelector('#cryptCode').value,
+                            file : file,
+                        };
+                    })
+                    uploader.bind('FileUploaded', function(up, file) {
+                        document.querySelector('#generate_it').click();
+                    })
+                    uploader.bind('Error', function (up, error) {
+                        alert(error);
+                    })
+                    uploader.init()
+                }
+
+
+                // document.querySelector('#uploadFile').click();
+                // document.querySelector('#uploadFile').addEventListener('change', function (e){
+                //     // console.log(e.target.)
+                //     uploader.addFile(e.target.files[0]);
+                //     uploader.start();
+                // });
+
             }
         })
-
-        document.addEventListener('change', async e=>{
-            if(e.target.id == 'uploadFile') {
-                let formData = new FormData();
-                formData.append("file", e.target.files[0]);
-                formData.append('_token', e.target.parentElement.querySelector('input[type=hidden]').value)
-                formData.append('pin', document.querySelector('#pin').value)
-                formData.append('crypt', document.querySelector('#cryptCode').value)
-                await fetch('/pin-submit', {
-                    method: "POST",
-                    body: formData
-                });
-                document.querySelector('#generate_it').click();
-
-            }
-        })
+        var uploader = 0;
+        var files = [];
     </script>
+    <script type="text/javascript" src="/build/js/plupload-2.3.9/js/plupload.full.min.js"></script>
     <!-- !Image Generation Page -->
 </x-layouts.auth>
 <div id="crypt-code" class="fn__preloader">

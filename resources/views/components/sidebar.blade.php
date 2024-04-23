@@ -8,6 +8,7 @@
             <span class="full_logo">
 {{--                <img src="{{ URL::asset('build/img/logo-desktop-full.png') }}" alt="" class="desktop_logo">--}}
                 <img width="200px" src="{{ URL::asset('build/img/logo_avks.svg') }}" alt="" class="retina_logo">
+                <img width="200px" src="{{ URL::asset('build/img/logo_avks.svg') }}" alt="" class="desktop_logo">
             </span>
             <span class="short_logo" style="background: url('{{ URL::asset('build/img/logo_avks.svg') }}');
             background-position: left;

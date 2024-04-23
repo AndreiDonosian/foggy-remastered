@@ -88,7 +88,7 @@
 	--techwave-site-bg-color: #0f0e11;
 	--techwave-header-bg-color: #17151b;
 	--techwave-some-r-bg-color: #17151b; 
-	--techwave-some-a-bg-color: #2b2830;
+	--techwave-some-a-bg-color: #2b2830; 
 	--techwave-main-color: #4CBD3F;
 	--techwave-main-color1: #41FF2C;
 	--techwave-main-color2: #C2FFBB;
@@ -7221,6 +7221,6 @@ a.fn__like.no_border .fn__svg{
 	border-radius: 0.375rem;
 }
 
-.techwave_fn_doc_page .acc__header,.techwave_fn_doc_page .acc__title {
+.techwave_fn_doc_page .acc__header, .techwave_fn_doc_page .acc__title {
     margin-bottom: 0;
 }

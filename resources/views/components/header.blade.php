@@ -4,14 +4,14 @@
     <div class="header__left">
         <div class="fn__token_info">
             <span class="token_summary">
-                <span class="count">120</span>
-                <span class="text">Tokens<br>Remain</span>
+                <span class="count">{{\Illuminate\Support\Facades\Auth::user()->mb_limit}} MB</span>
+                <span class="text">MB<br>Remain</span>
             </span>
             <a href="{{ url('/pricing') }}" class="token_upgrade techwave_fn_button"><span>Upgrade</span></a>
-            <div class="token__popup">
-                Resets in <span>19 hours.</span><br>
-                Daily limit is <span>200 tokens</span>
-            </div>
+{{--            <div class="token__popup">--}}
+{{--                Resets in <span>19 hours.</span><br>--}}
+{{--                Daily limit is <span>200 tokens</span>--}}
+{{--            </div>--}}
         </div>
     </div>
     <!-- /Header left: token information -->
