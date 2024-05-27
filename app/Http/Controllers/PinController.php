@@ -24,43 +24,39 @@ class PinController extends Controller
         $files = PinHelper::getPathFolders($pin, $contentHidden);
 
         return view('new/_pin_table', compact('files', 'pin'))->render();
-
     }
 
-    public function submitPin(Request $request): false|string
+    public function submitPin(Request $request): array
     {
-        $subFolders = PinHelper::getSubFolders($request->get('pin'));
+        $success = false;
         $chunk = $request->get('chunk', 0);
         $chunks = $request->get('chunks', 0);
         $fileExt = explode('.',$request->get('name'));
         $fileExt = end($fileExt);
-        $ret = FileHelper::chunkUploader($chunk, $chunks, sha1($request->get('file')['id'].$request->get('file')['name'].$request->get('file')['size']).'.'.$fileExt, $request->get('pin'));
-        $filePath = '';
-        if(!empty($ret['saved'])) {
-            $filePath = $ret['path'];
+        $fileName = sha1($request->get('file')['id'].$request->get('file')['name'].$request->get('file')['size']).'.'.$fileExt;
+        $a = false;
+        $uploadRet = FileHelper::chunkUploader($chunk, $chunks, $fileName, $request->get('pin'));
+
+        if(!empty($uploadRet['saved'])) { //check if file fully uploaded
             $m = new File();
             $m->setAttribute('file_orig_name', $request->get('name'));
+            $m->setAttribute('file_name', $fileName);
             $m->setAttribute('size', $request->get('file')['size']/1024); //in KB
-            if($crypt = $request->get('crypt', '')) {
-                $m->setAttribute('is_encrypted', 1);
-            } else {
-                $m->setAttribute('is_encrypted', 0);
-            }
             $m->setAttribute('user_id', Auth::user()->getAuthIdentifier());
-
-//            $filePath = $request->file('file')->store('public/'.$subFolders);
-            if(!empty($crypt)) {
-//            dd();
-                FileHelper::encryptFile($filePath, $filePath.'_enc', $crypt);
-                unlink($filePath);
-            }
-
+            $m->setAttribute('is_encrypted', 0); //TODO: fix encryption for media files
             $m->save();
-            $user = User::query()->where('id', Auth::user()->getAuthIdentifier())->first();
-//            $user->setAttribute('mb_limit', $user->getAttribute('mb_limit')-($request->get('file')['size']/1024/1024));
-            $user->save();
+
+            Auth::user()->mb_limit -= $request->get('file')['size']/1024/1024;
+            Auth::user()->save();
+
+            $success = true;
+
+            $a = FileHelper::makeFilePublic($uploadRet['path'], $fileName);
         }
 
-        return $filePath;
+        return [
+            'success'=>$success,
+            'a'=>$a
+        ];
     }
 }

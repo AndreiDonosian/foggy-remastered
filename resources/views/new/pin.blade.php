@@ -3,7 +3,11 @@
     <x-slot name="meta">
         <meta name="description" content="Dashboard">
     </x-slot>
-
+    <x-slot name="other">
+        <!-- Report -->
+        <x-report />
+        <!-- !Report -->
+    </x-slot>
     <!-- Image Generation Page -->
     <div class="techwave_fn_image_generation_page">
         <div class="generation__page">
@@ -12,17 +16,6 @@
             <div class="generation_header">
                 <div class="header_top">
                     <h1 class="title">Pin gather</h1>
-                    <div class="filter__upscaled">
-                        <label class="fn__checkbox">
-                            <input type="checkbox" id="showContent">Show content
-                            <span class="checkmark"></span>
-                            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Layer_1" x="0px" y="0px" viewBox="0 0 408.8 294.1" style="enable-background:new 0 0 408.8 294.1;" xml:space="preserve" class="fn__svg replaced-svg">
-<g>
-    <path d="M408.8,36.8c-2,10.1-8.3,17.4-15.4,24.5C319.6,135,245.8,208.8,172.1,282.6c-10,10-21.5,14.3-35.1,9.5   c-5-1.7-9.9-4.9-13.6-8.6C85.6,246.1,48.1,208.6,10.6,171c-15.1-15.2-13.9-37,2.6-49.9c12.8-10,30.9-8.2,43.7,4.6   c28.9,28.9,57.8,57.8,86.6,86.7c1.1,1.1,1.8,2.6,3.4,4.9c1.7-2.3,2.4-3.6,3.4-4.6c67.1-67.1,134.2-134.2,201.2-201.3   c9.7-9.7,21-13.8,34.5-9.6c11.8,3.7,18.8,12,21.9,23.8c0.2,0.9,0.5,1.7,0.8,2.6C408.8,31,408.8,33.9,408.8,36.8z"></path>
-</g>
-</svg>
-                        </label>
-                    </div>
                 </div>
                 <style>
                     .pin-button {
@@ -83,87 +76,87 @@
     <script type="text/javascript">
         let staticHeight = 442;
 
-        document.querySelector('#generate_it').addEventListener('click', event=>{
+        document.querySelector('#generate_it').addEventListener('click', async event=>{
             event.preventDefault();
             if(!document.querySelector('#fn__include_textarea').value) {
                 return;
             }
-            fetch("/pin-gather?pin="+document.querySelector('#fn__include_textarea').value+'&contentHidden='+(document.querySelector('#showContent').checked?0:1), {
+            await fetch("/pin-gather?pin="+document.querySelector('#fn__include_textarea').value, {
                 method: "GET",
             })
                 .then(async (response) => {
                     document.querySelector('.generation_history').innerHTML = await response.text();
                     document.querySelector('.generation_header').style.zIndex = -1;
                     document.querySelector('.generation_header').style.overflow = 'hidden';
+                    uploaderInit();
+                    FrenifyTechWave.report()
+
                     let tInterHide = setInterval(function (){
-                        document.querySelector('.generation_header').style.height = (staticHeight-=4)+'px';
-                        if(staticHeight<=0) {
-                            document.querySelector('.filter__upscaled').style.display = 'none';
-                            clearInterval(tInterHide);
-                        }
+                        document.querySelector('.generation_header').style.height = (staticHeight-=10)+'px';
                     }, 1)
                 });
         })
-        document.addEventListener('click', async e=>{
-            if(e.target.closest('.fn__upload')) {
-                if(document.querySelectorAll('.fn__upload textarea').length==0) {
-                    document.querySelector('.fn__upload').innerHTML = '<label>Please use simple(or not) password to encrypt this file</label><textarea id="cryptCode" rows="1"></textarea> <textarea class="fn__hidden_textarea" rows="1" tabindex="-1"></textarea><a href="javascript:void(0);" id="sendFile" class="techwave_fn_button"><span>Save</span></a>';
 
-                }
-            }
-            if(e.target.id =='sendFile') {
-                if(typeof uploader=='number') {
-                    uploader = new plupload.Uploader({
-                        browse_button: 'sendFile',
-                        chunk_size: '200kb',
-                        max_retries: 3,
-                        url: '/pin-submit',
-                        autostart: true,
-                        drop_element: document.querySelector('.fn__model_item.new'),
-                    });
-                    uploader.bind('FilesAdded', function (up, file) {
-                        console.log(file)
-                        console.log(uploader.files)
+        function uploaderInit()
+        {
+            uploader = new plupload.Uploader({
+                browse_button: 'uploadLabel',
+                chunk_size: '200kb',
+                max_retries: 3,
+                url: '/file/upload',
+                autostart: true,
+                drop_element: document.querySelector('.fn__model_item.new'),
+            });
+            uploader.bind('FilesAdded', async function (up, file) {
+                var _sync = await fetch('/ajax/credits-check?size='+file[0].size).then(async function (response){
+                    const _body = JSON.parse(await response.text());
+                    console.log(_body);
+                    if(_body.error) {
+                        alert(_body.message);
+                        return;
+                    } else {
                         uploader.start();
-                    })
-                    uploader.bind('beforeUpload', function(up, file){
-                        uploader.settings.multipart_params = {
-                            pin : document.querySelector('#pin').value,
-                            crypt : document.querySelector('#cryptCode').value,
-                            file : file,
-                        };
-                    })
-                    uploader.bind('FileUploaded', function(up, file) {
-                        document.querySelector('#generate_it').click();
-                    })
-                    uploader.bind('Error', function (up, error) {
-                        alert(error);
-                    })
-                    uploader.init()
+                    }
+                })
+            })
+            uploader.bind('beforeUpload', function(up, file){
+                uploader.settings.multipart_params = {
+                    pin : document.querySelector('#pin').value,
+                    // crypt : document.querySelector('#cryptCode').value,
+                    file : file,
+                };
+            });
+
+            uploader.bind('UploadProgress', function(uploader, file){
+                if(file.percent<=25) {
+                    console.log(file.percent);
+                    $('#uploadForm').css({'border': 'solid 5px white',
+                        'border-left': 'solid 5px lime;'});
+
+
                 }
+                else {if(file.percent<=50) {
+                    console.log(1);
+                    $('#uploadForm').css({'border': 'solid 5px white;',
+                        'border-left': 'solid 5px lime;',
+                        'border-bottom': 'solid 5px lime;'});
+                    }
+                }
+            });
 
-
-                // document.querySelector('#uploadFile').click();
-                // document.querySelector('#uploadFile').addEventListener('change', function (e){
-                //     // console.log(e.target.)
-                //     uploader.addFile(e.target.files[0]);
-                //     uploader.start();
-                // });
-
-            }
-        })
+            uploader.bind('FileUploaded', function(up, file) {
+                let _mb = parseInt(document.querySelector('.token_summary .count').textContent);
+                document.querySelector('.token_summary .count').textContent = (_mb-parseInt(file.size/1024/1024))+ " MB";
+                document.querySelector('#generate_it').click();
+            })
+            uploader.bind('Error', function (up, error) {
+                console.log(error);
+            })
+            uploader.init()
+        }
         var uploader = 0;
         var files = [];
     </script>
     <script type="text/javascript" src="/build/js/plupload-2.3.9/js/plupload.full.min.js"></script>
     <!-- !Image Generation Page -->
 </x-layouts.auth>
-<div id="crypt-code" class="fn__preloader">
-    <div class="wrapper"></div>
-    <div class="text">Please provide crypt key for this file</div>
-    <div>
-        <textarea id="fn__include_textarea" rows="1"></textarea>
-        <textarea class="fn__hidden_textarea" rows="1" tabindex="-1"></textarea>
-    </div>
-
-</div>

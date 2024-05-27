@@ -52,12 +52,6 @@
                                 </div>
                             </div>
                             <div class="item">
-                                <label class="input_label" for="username">Crypt passcode (changing will remove all your files!)</label>
-                                <div class="input_item">
-                                    <input class="input" type="text" id="crypt-passcode" value="0000">
-                                </div>
-                            </div>
-                            <div class="item">
                                 <label class="input_label" for="email">Email Address</label>
                                 <div class="input_item">
                                     <input class="input" type="text" id="email" value="{{\Illuminate\Support\Facades\Auth::user()->email}}">

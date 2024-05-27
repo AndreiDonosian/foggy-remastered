@@ -2,25 +2,36 @@
 
 namespace App\Helpers;
 
+use App\Models\File;
+use Illuminate\Support\Facades\Auth;
+
 class PinHelper
 {
-    public static function getPathFolders(string $pin, bool $contentHidden): array
+    public static function getPathFolders(string $pin, mixed $contentHidden = true): array
     {
         $subFolders = self::getSubFolders($pin);
 
         $output = [];
-        if(is_dir(storage_path('app/public/'.$subFolders))) {
-            foreach (scandir(storage_path('app/public/'.$subFolders)) as $k=>$file) {
+        if(is_dir(storage_path('app/storage1/'.$subFolders))) {
+            foreach (scandir(storage_path('app/storage1/'.$subFolders)) as $k=>$file) {
                 if($k==0||$k==1)
                     continue; //skip . and ..
-                $output[] = [
-                    'public_path'=>$contentHidden?'/build/img/gallery/1.jpg':'/storage/'.$subFolders.'/'.$file,
-                    'meta'=>[
-                        'size'=> number_format(filesize(storage_path('app/public/').$subFolders.'/'.$file)/1024/1024,2) . 'MB',
-                        'type'=>mime_content_type(storage_path('app/public/').$subFolders.'/'.$file),
-                        'name'=>$file
-                    ]
-                ];
+                if(is_file(storage_path('app/storage1/').$subFolders.'/'.$file)) {
+                    $fileStored = File::where('file_name', $file)->where('user_id', Auth::user()->getAuthIdentifier())->first();
+
+                    $output[] = [
+                        'public_path'=>'/build/img/gallery/1.jpg',
+                        'randId'=>sha1(mt_rand(0, time())),
+                        'meta'=>[
+                            'size'=> number_format(filesize(storage_path('app/storage1/').$subFolders.'/'.$file)/1024/1024,2) . 'MB',
+                            'type'=>mime_content_type(storage_path('app/storage1/').$subFolders.'/'.$file),
+                            'name'=>$fileStored->file_orig_name??$file,
+                            'origname'=>$file,
+                            'path'=>storage_path('app/storage1/').$subFolders.'/'.$file,
+                            'id'=>$fileStored->id
+                        ]
+                    ];
+                }
             }
         }
 

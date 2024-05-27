@@ -4,9 +4,7 @@
 
     <!-- logo (left panel) -->
     <div class="leftpanel_logo">
-{{--        <a href="{{ url('/index') }}" class="fn_logo">--}}
             <span class="full_logo">
-{{--                <img src="{{ URL::asset('build/img/logo-desktop-full.png') }}" alt="" class="desktop_logo">--}}
                 <img width="200px" src="{{ URL::asset('build/img/logo_avks.svg') }}" alt="" class="retina_logo">
                 <img width="200px" src="{{ URL::asset('build/img/logo_avks.svg') }}" alt="" class="desktop_logo">
             </span>

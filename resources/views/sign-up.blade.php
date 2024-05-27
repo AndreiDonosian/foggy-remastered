@@ -8,7 +8,7 @@
     <div class="techwave_fn_sign">
 
         <div class="sign__content">
-            <h1 class="logo">Designed by Frenify</h1>
+            <h1 class="logo"></h1>
             <form class="signup">
                 <div class="form__content">
                     <div class="form__title">Sign Up</div>

@@ -44,4 +44,18 @@ class User extends Authenticatable implements MustVerifyEmail
             'password' => 'hashed',
         ];
     }
+
+    public function getPlan()
+    {
+        $plan = Plan::query()->find($this->getAttribute('plan_id'));
+
+        if(empty($plan)) {
+            $plan = new \stdClass();
+            $plan->name = __('plans.basic');
+            $plan->description = __('plans.description');
+            $plan->price = 0;
+        }
+
+        return $plan;
+    }
 }

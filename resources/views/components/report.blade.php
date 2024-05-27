@@ -4,12 +4,11 @@
     </a>
     <div class="report__closer"></div>
     <div class="report__content">
-        <h3 class="title">Report Item</h3>
-        <h3 class="subtitle">What is the main reason for your report?</h3>
-        <input class="reason_field" type="text" placeholder="Type here...">
+        <h3 class="title">Delete Item</h3>
+        <h3 class="subtitle">Are you sure you want to delete it?</h3>
         <div class="btns">
             <a href="javascript:void(0);" class="report techwave_fn_button">
-                <span>Report</span>
+                <span>Yes</span>
             </a>
             <a href="javascript:void(0);" class="cancel techwave_fn_button">
                 <span>Cancel</span>

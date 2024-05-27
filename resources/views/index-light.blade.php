@@ -50,7 +50,7 @@
             </div>
             <div class="section_right">
                 <div class="company_info">
-                    <img src="{{ URL::asset('build/img/logo-desktop-full.png') }}" alt="">
+                    <img src="{{ URL::asset('build/img/logo_avks.svg') }}" alt="">
                     <p class="fn__animated_text">The official server of TECH-AI, a text-to-image AI where your imagination is the only limit. We’re building market-leading features that will give you greater control over your generations.</p>
                     <hr>
                     <div class="fn__members">

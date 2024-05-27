@@ -28,7 +28,16 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::get('/pin', [\App\Http\Controllers\PinController::class, 'index'])->name('pin');
     Route::get('/pin-gather', [\App\Http\Controllers\PinController::class, 'getPin'])->name('pin.gather');
-    Route::post('/pin-submit', [\App\Http\Controllers\PinController::class, 'submitPin'])->name('pin.submit')->withoutMiddleware(\Illuminate\Foundation\Http\Middleware\VerifyCsrfToken::class);
+
+
+    Route::post('/file/upload', [\App\Http\Controllers\PinController::class, 'submitPin'])->name('pin.submit')
+        ->middleware([\App\Http\Middleware\MemoryVerify::class])
+        ->withoutMiddleware(\Illuminate\Foundation\Http\Middleware\VerifyCsrfToken::class);
+
+    Route::get('/file/delete/{name}/{pin}', [\App\Http\Controllers\FileController::class, 'delete'])->name('file.delete');
+
+
+    Route::get('/ajax/credits-check', [\App\Http\Controllers\CreditsController::class, 'check']);
 
 
     // common all page routes

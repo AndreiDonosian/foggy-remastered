@@ -35,15 +35,15 @@
                             </li>
                         </ul>
                     </div>
-                    <a href="{{ url('/user-settings') }}" class="user_edit fn__icon_button">
+                    <a href="{{ url('/profile/settings') }}" class="user_edit fn__icon_button">
                         <img src="{{ URL::asset('build/svg/setting.svg') }}" alt="" class="fn__svg">
                     </a>
                 </div>
 
                 <div class="user__plan">
                     <div class="plan_left">
-                        <h4 class="subtitle">Your Plan</h4>
-                        <p class="info"><span>Personal Plan</span> - You will given 8000 tokens every month</p>
+                        <h4 class="subtitle">{{__('user.Your Plan')}}</h4>
+                        <p class="info"><span>{{\Illuminate\Support\Facades\Auth::user()->getPlan()->name}}</span> <br/> {{\Illuminate\Support\Facades\Auth::user()->getPlan()->description}}</p>
                     </div>
                     <div class="plan_right">
                         <a href="{{ url('/pricing') }}" class="token_upgrade techwave_fn_button"><span>Upgrade</span></a>

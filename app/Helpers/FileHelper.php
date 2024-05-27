@@ -2,17 +2,19 @@
 
 namespace App\Helpers;
 
+use App\Models\PublicFiles;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
 class FileHelper
 {
 
-    const FILE_ENCRYPTION_BLOCKS = 1000;
+    const FILE_ENCRYPTION_BLOCKS = 10000;
 
     /**
      * @param  $source  Path of the unencrypted file
      * @param  $dest  Path of the encrypted file to created
-     * @param  $key  Encryption key
+     * @param  $key  mixed Encryption key
      */
 
     public static function encryptFile($source, $dest, $key): void
@@ -54,7 +56,7 @@ class FileHelper
         $iv = fread($fpSource, $ivLenght);
 
         while (!feof($fpSource)) {
-            $ciphertext = fread($fpSource, $ivLenght * (self::FILE_ENCRYPTION_BLOCKS + 1));
+            $ciphertext = fread($fpSource, $ivLenght * (self::FILE_ENCRYPTION_BLOCKS+1));
             $plaintext = openssl_decrypt($ciphertext, $cipher, $key, OPENSSL_RAW_DATA, $iv);
             $iv = substr($plaintext, 0, $ivLenght);
 
@@ -68,8 +70,8 @@ class FileHelper
     public static function chunkUploader(int $chunk, int $chunks, $fileName, mixed $pin)
     {
         // Open temp file
-        Storage::disk('local')->makeDirectory('public/'.PinHelper::getSubFolders($pin));
-        $filePath = Storage::disk('local')->path('public/'.PinHelper::getSubFolders($pin)).'/'.$fileName;
+        Storage::disk('local')->makeDirectory('storage1/'.PinHelper::getSubFolders($pin));
+        $filePath = Storage::disk('local')->path('storage1/'.PinHelper::getSubFolders($pin)).'/'.$fileName;
 
         $out = fopen("{$filePath}.part", $chunk == 0 ? "wb" : "ab");
         if ($out) {
@@ -98,6 +100,23 @@ class FileHelper
         } else {}
 
         return ['success' => true, 'saved'=>$saved, 'path'=>$filePath];
+    }
+
+    public static function makeFilePublic(string $localFilePath, string $fileName): string
+    {
+        Storage::disk('local')->makeDirectory('public/'.PinHelper::getSubFolders(Auth::user()->email));
+        $publicPath = Storage::disk('local')->path('public/'.PinHelper::getSubFolders(Auth::user()->email));
+
+        copy($localFilePath, $publicPath.'/'.$fileName);
+
+        $p = new PublicFiles();
+        $p->user_hash = '';
+        $p->path = $publicPath.'/'.$fileName;
+        $p->public_till = date('Y-m-d', strtotime('+1 day'));
+        $p->save();
+
+
+        return $publicPath.'/'.$fileName;
     }
 
     public static function getAbsolutePath(string $path): string

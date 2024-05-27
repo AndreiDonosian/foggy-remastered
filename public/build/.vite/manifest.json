@@ -1,15 +1,15 @@
 {
   "resources/css/style.css": {
-    "file": "assets/style-D64iWQll.css",
+    "file": "assets/style-CD0-pdiv.css",
     "src": "resources/css/style.css",
     "isEntry": true
   },
-  "resources/img/logo-desktop-full.png": {
-    "file": "assets/logo-desktop-full-MQHYVJdW.png",
-    "src": "resources/img/logo-desktop-full.png"
+  "resources/img/logo_avks.svg": {
+    "file": "assets/logo_avks-DgnkPy6W.svg",
+    "src": "resources/img/logo_avks.svg"
   },
   "resources/js/init.js": {
-    "file": "assets/init-ChCM4K_o.js",
+    "file": "assets/init-D1GHQpOo.js",
     "src": "resources/js/init.js",
     "isEntry": true
   }

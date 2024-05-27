@@ -7,7 +7,7 @@
     <!-- Sign In -->
     <div class="techwave_fn_sign">
         <div class="sign__content">
-            <h1 class="logo">Designed by Frenify</h1>
+            <div class="logo"></div>
             <form method="POST" action="{{ route('login') }}" class="login">
                 @csrf
 
@@ -51,14 +51,14 @@
                             <input type="submit" name="submit" value="Sign In">
                         </label>
                     </div>
-                    <div class="form__alternative">
-                        <div class="fn__lined_text">
-                            <div class="line"></div>
-                            <div class="text">Or</div>
-                            <div class="line"></div>
-                        </div>
-                        <a href="javascript:void(0);" class="techwave_fn_button"><span>Sign in with Google</span></a>
-                    </div>
+{{--                    <div class="form__alternative">--}}
+{{--                        <div class="fn__lined_text">--}}
+{{--                            <div class="line"></div>--}}
+{{--                            <div class="text">Or</div>--}}
+{{--                            <div class="line"></div>--}}
+{{--                        </div>--}}
+{{--                        <a href="javascript:void(0);" class="techwave_fn_button"><span>Sign in with Google</span></a>--}}
+{{--                    </div>--}}
                 </div>
             </form>
             <div class="sign__desc">
