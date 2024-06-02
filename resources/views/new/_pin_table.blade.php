@@ -3,10 +3,10 @@
         @foreach($files as $file)
             <li class="fn__model_item" id="<?=$file['randId']?>">
                 <div class="item">
-                    <a href="javascript:void(0);" class="fn__bookmark has__bookmark">
-                        <img src="{{ URL::asset('build/svg/bookmark.svg') }}" alt="" class="fn__svg hasntbook">
-                        <img src="{{ URL::asset('build/svg/bookmarked.svg') }}" alt="" class="fn__svg hasbook">
-                    </a>
+{{--                    <a href="javascript:void(0);" class="fn__bookmark has__bookmark">--}}
+{{--                        <img src="{{ URL::asset('build/svg/bookmark.svg') }}" alt="" class="fn__svg hasntbook">--}}
+{{--                        <img src="{{ URL::asset('build/svg/bookmarked.svg') }}" alt="" class="fn__svg hasbook">--}}
+{{--                    </a>--}}
                     <div class="img abs_item">
                         <img src="{{$file['public_path']}}" alt="">
                         <div class="all_options">
@@ -17,7 +17,7 @@
                                 <div class="fn__icon_popup">
                                     <ul>
                                         <li>
-                                            <a href="javascript:void(0);">Original File</a>
+                                            <a href="{{route('file.read', ['name'=>$file['meta']['name'], 'pin'=>$pin])}}">Original File</a>
                                         </li>
                                         <li>
                                             <a href="javascript:void(0);">Encrypted File</a>
@@ -32,7 +32,7 @@
                                 <div class="fn__icon_popup">
                                     <ul>
                                         <li>
-                                            <a href="javascript:void(0);">Create Download link</a>
+                                            <a href="javascript:void(0);" data-type="link" data-url="{{route('file.public', ['pin'=>$pin, 'name'=>$file['meta']['name']])}}" class="fn__publicLink">Create Download link</a>
                                         </li>
                                         <li>
                                             <a href="javascript:void(0);">Create download link (encrypted)</a>
@@ -47,7 +47,7 @@
                                 <div class="fn__icon_popup">
                                     <ul>
                                         <li class="high_priorety">
-                                            <a href="#" data-parent-id="<?=$file['randId']?>" data-type="delete" data-url="{{route('file.delete', ['pin'=>$pin, 'name'=>$file['meta']['name']])}}" class="fn__report">Delete Image</a>
+                                            <a href="#" data-parent-id="<?=$file['randId']?>" data-type="delete" data-url="{{route('file.delete', ['pin'=>$pin, 'name'=>$file['meta']['name']])}}" class="fn__report">Delete File</a>
                                         </li>
                                     </ul>
                                 </div>

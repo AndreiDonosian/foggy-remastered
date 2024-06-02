@@ -4,7 +4,7 @@
     </a>
     <div class="report__closer"></div>
     <div class="report__content">
-        <h3 class="title">Delete Item</h3>
+        <h3 class="title">Delete File</h3>
         <h3 class="subtitle">Are you sure you want to delete it?</h3>
         <div class="btns">
             <a href="javascript:void(0);" class="report techwave_fn_button">

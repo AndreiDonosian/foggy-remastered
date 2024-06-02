@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\Route;
 //    return view('welcome');
 //});
 
+
+Route::get('/', [\App\Http\Controllers\GuestController::class, 'index'])->name('guest.index');
 Auth::routes(['verify' => true]);
 
 Route::middleware(['auth', 'verified'])->group(function () {
@@ -20,7 +22,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     }
 
     \Illuminate\Support\Facades\App::setLocale($locale);
-    Route::get('/', [HomeController::class, 'index'])->name('dashboard');
+    Route::get('/dashboard', [HomeController::class, 'index'])->name('dashboard');
 
 
     Route::get('/profile/info', [\App\Http\Controllers\ProfileController::class, 'info'])->name('profile.info');
@@ -34,6 +36,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
         ->middleware([\App\Http\Middleware\MemoryVerify::class])
         ->withoutMiddleware(\Illuminate\Foundation\Http\Middleware\VerifyCsrfToken::class);
 
+    Route::get('/file/read/{name}/{pin}', [\App\Http\Controllers\FileController::class, 'readFile'])->name('file.read');
+    Route::get('/file/public/{name}/{pin}', [\App\Http\Controllers\FileController::class, 'makePublic'])->name('file.public');
     Route::get('/file/delete/{name}/{pin}', [\App\Http\Controllers\FileController::class, 'delete'])->name('file.delete');
 
 

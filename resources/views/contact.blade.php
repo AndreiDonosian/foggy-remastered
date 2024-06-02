@@ -20,7 +20,7 @@
                 <p>Please fill out the form with your contact information and a detailed message, and we will get back to you as soon as possible. Your privacy is important to us, and we will never share your information with third parties.</p>
                 
                 <div class="fn_contact_form">
-                    <form action="/" method="post" class="contact_form" id="contact_form" autocomplete="off">
+                    <form action="/contact/submit" method="post" class="contact_form" id="contact_form" autocomplete="off">
                         <div class="input_list">
                             <ul>
                                 <li>
@@ -55,9 +55,9 @@
                 <p>In case you prefer to contact us through other means, you can also find our phone number and mailing address listed below. We strive to provide exceptional customer service and ensure that your experience with us is seamless.</p>
                 <p>Thank you for choosing us as your trusted resource. We look forward to hearing from you!</p>
                 <p>Contact Information:<br>
-                Phone: <span class="heading_color">[Insert Phone Number]</span><br>
-                Address: <span class="heading_color">[Insert Mailing Address]</span></p>
-                <p>Please note that our office hours are [Insert Office Hours]. While we endeavor to respond to all inquiries promptly, there may be slight delays during weekends and holidays.</p>
+{{--                Phone: <span class="heading_color">[Insert Phone Number]</span><br>--}}
+                Address: <span class="heading_color"><a href="mailto:info - {at} - avks.cloud">info - at - avks.cloud</a></span></p>
+                <p>Please note that our office hours are 24/7. While we endeavor to respond to all inquiries promptly, there may be slight delays during weekends and holidays.</p>
                 
             </div>
         </div>        

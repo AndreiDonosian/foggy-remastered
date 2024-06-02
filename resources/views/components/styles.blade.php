@@ -6,7 +6,7 @@
 
 <!-- Styles -->
 {!! $styles !!}
-<link type="text/css" rel="stylesheet" href="{{ URL::asset('build/css/plugins.css?ver=1.0.0') }}" />
-<link type="text/css" rel="stylesheet" href="{{ URL::asset('build/css/style.css?ver=1.0.1') }}" />
+<link type="text/css" rel="stylesheet" href="{{ URL::asset('build/css/plugins.css?ver=1.0.1') }}" />
+<link type="text/css" rel="stylesheet" href="{{ URL::asset('build/css/style.css?ver=1.0.2') }}" />
 {{-- @vite(['resources/css/style.css']) --}}
 <!-- !Styles -->

@@ -1439,6 +1439,52 @@ var FrenifyTechWave = {
         });
     },
 
+    publicLink: function () {
+        var _class = '.techwave_fn_report';
+        var _container = '';
+        var linkbox = $(_class);
+        $(".fn__publicLink")
+            .off()
+            .on("click", async function () {
+                var e = $(this),
+                    id = e.data("id");
+
+                var _url = e.data('url');
+                var _parentId = e.data('parent-id');
+                var _type = e.data('type');
+
+                document.querySelector(_class+" .report").setAttribute('data-url', _url)
+                document.querySelector(_class+" .report").setAttribute('data-parent-id', _parentId)
+                document.querySelector(_class+" .report").setAttribute('data-type', _type)
+                await fetch(_url, {
+                    method: "GET",
+                }).then(async (response) => {
+                    const body = JSON.parse(await response.text());
+
+                    console.log(body);
+                    linkbox.find('.title').text('Link generated:');
+                    linkbox.find('.subtitle').text(body.path);
+                    linkbox.find('.report').text('Copy!');
+
+                });
+
+                if (linkbox.hasClass("opened")) {
+                    linkbox.removeClass("opened");
+                } else {
+                    linkbox.addClass("opened");
+                }
+
+
+                linkbox.find('.report, .report>span')
+                    .off()
+                    .on('click', function (e) {
+                        navigator.clipboard.writeText(linkbox.find('.subtitle').text())
+                        FrenifyTechWave.report();
+                        linkbox.removeClass("opened");
+                    })
+            });
+    },
+
     report: function () {
         var reportbox = $(".techwave_fn_report");
         $(".fn__report")
@@ -1450,6 +1496,30 @@ var FrenifyTechWave = {
                 document.querySelector(".techwave_fn_report .report").setAttribute('data-url', e.data('url'))
                 document.querySelector(".techwave_fn_report .report").setAttribute('data-parent-id', e.data('parent-id'))
                 document.querySelector(".techwave_fn_report .report").setAttribute('data-type', e.data('type'))
+                reportbox.find('.title').text('Delete File');
+                reportbox.find('.subtitle').text('Are you sure you want to delete it?');
+                reportbox.find('.report').text('Yes!');
+
+                reportbox.find('.report, .report>span')
+                    .off()
+                    .on('click', async function (e) {
+                        let url = e.target.getAttribute('data-url');
+                        let _type = e.target.getAttribute('data-type');
+                        let _id = e.target.getAttribute('data-parent-id');
+
+                        if(url) {
+                            await fetch(url, {
+                                method: "GET",
+                            }).then(async (response) => {
+                                const body = await response.body;
+                                // console.log(body, JSON.parse(body));
+                                if(_type=='delete') {
+                                    reportbox.find('.fn__closer')[0].click();
+                                    $('#'+_id).remove();
+                                }
+                            });
+                        }
+                    })
 
                 if (reportbox.hasClass("opened")) {
                     reportbox.removeClass("opened");
@@ -1480,26 +1550,6 @@ var FrenifyTechWave = {
                 reportbox.removeClass("opened");
                 return false;
             });
-
-        reportbox.find('.report, .report>span')
-            .off()
-            .on('click', async function (e) {
-                let url = e.target.getAttribute('data-url');
-                let _type = e.target.getAttribute('data-type');
-                let _id = e.target.getAttribute('data-parent-id');
-
-                if(url) {
-                    await fetch(url, {
-                        method: "GET",
-                    }).then(async (response) => {
-                        alert(_type);
-                        if(_type=='delete') {
-                            reportbox.find('.fn__closer')[0].click();
-                            $('#'+_id).remove();
-                        }
-                    });
-                }
-            })
     },
 
     follow: function () {
@@ -1641,7 +1691,7 @@ var FrenifyTechWave = {
         $(".techwave_fn_accordion").each(function () {
             $(this).find(".opened .acc__content").slideDown(300);
         });
-        $(".techwave_fn_accordion .acc__header").on("click", function () {
+        $(".techwave_fn_accordion .acc__header").off().on("click", function () {
             var element = $(this),
                 parent = element.closest(".acc__item"),
                 accordion = element.closest(".techwave_fn_accordion"),

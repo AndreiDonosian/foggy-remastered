@@ -90,6 +90,8 @@
                     document.querySelector('.generation_header').style.overflow = 'hidden';
                     uploaderInit();
                     FrenifyTechWave.report()
+                    FrenifyTechWave.publicLink()
+
 
                     let tInterHide = setInterval(function (){
                         document.querySelector('.generation_header').style.height = (staticHeight-=10)+'px';

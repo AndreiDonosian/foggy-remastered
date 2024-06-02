@@ -115,9 +115,9 @@ class FileHelper
         $p->public_till = date('Y-m-d', strtotime('+1 day'));
         $p->save();
 
-
         return $publicPath.'/'.$fileName;
     }
+
 
     public static function getAbsolutePath(string $path): string
     {

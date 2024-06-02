@@ -28,3 +28,5 @@ document.addEventListener('ready', function (){
         setCookie('lang', lang, 365);
     }
 })
+
+FrenifyTechWave.init();

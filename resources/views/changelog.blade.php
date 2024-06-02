@@ -23,13 +23,16 @@
                     <div class="changelog__item">
                         <div class="item__header">
                             <div class="item__ver">v1.0.0</div>
-                            <div class="item__date">March 26, 2024</div>
+                            <div class="item__date">May 26, 2024</div>
                         </div>
                         <div class="item__content">
                             <div class="item__group">
                                 <div class="item__title"><span>New</span></div>
                                 <ul class="item__list">
                                     <li>Initial Release</li>
+                                    <li>File upload manager</li>
+                                    <li>Token support</li>
+                                    <li>MB limits</li>
                                 </ul>
                             </div>
                         </div>

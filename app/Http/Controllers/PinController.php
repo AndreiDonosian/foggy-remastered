@@ -50,8 +50,6 @@ class PinController extends Controller
             Auth::user()->save();
 
             $success = true;
-
-            $a = FileHelper::makeFilePublic($uploadRet['path'], $fileName);
         }
 
         return [

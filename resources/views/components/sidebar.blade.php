@@ -41,62 +41,9 @@
                         <span class="text">Pin (Implemented)</span>
                     </a>
                 </li>
-{{--                <li>--}}
-{{--                    <a href="{{ url('/community-feed') }}" class="fn__tooltip menu__item" data-position="right"--}}
-{{--                        title="Community Feed">--}}
-{{--                        <span class="icon">--}}
-{{--                            <img src="{{ URL::asset('build/svg/community.svg') }}" alt="" class="fn__svg">--}}
-{{--                        </span>--}}
-{{--                        <span class="text">Community Feed</span>--}}
-{{--                    </a>--}}
-{{--                </li>--}}
-{{--                <li>--}}
-{{--                    <a href="{{ url('/personal-feed') }}" class="fn__tooltip menu__item" data-position="right"--}}
-{{--                        title="Personal Feed">--}}
-{{--                        <span class="icon">--}}
-{{--                            <img src="{{ URL::asset('build/svg/person.svg') }}" alt="" class="fn__svg">--}}
-{{--                        </span>--}}
-{{--                        <span class="text">Personal Feed<span class="count">48</span></span>--}}
-{{--                    </a>--}}
-{{--                </li>--}}
-{{--                <li>--}}
-{{--                    <a href="{{ url('/models') }}" class="fn__tooltip menu__item" data-position="right"--}}
-{{--                        title="Finetuned Models">--}}
-{{--                        <span class="icon">--}}
-{{--                            <img src="{{ URL::asset('build/svg/cube.svg') }}" alt="" class="fn__svg">--}}
-{{--                        </span>--}}
-{{--                        <span class="text">Finetuned Models</span>--}}
-{{--                    </a>--}}
-{{--                </li>--}}
             </ul>
         </div>
         <!-- !#1 navigation group -->
-
-        <!-- #2 navigation group -->
-{{--        <div class="nav_group">--}}
-{{--            <h2 class="group__title">User Tools</h2>--}}
-{{--            <ul class="group__list">--}}
-{{--                <li>--}}
-{{--                    <a href="{{ url('/image-generation') }}" class="fn__tooltip menu__item" data-position="right"--}}
-{{--                        title="Image Generation">--}}
-{{--                        <span class="icon">--}}
-{{--                            <img src="{{ URL::asset('build/svg/image.svg') }}" alt="" class="fn__svg">--}}
-{{--                        </span>--}}
-{{--                        <span class="text">Image Generation</span>--}}
-{{--                    </a>--}}
-{{--                </li>--}}
-{{--                <li>--}}
-{{--                    <a href="{{ url('/ai-chat-bot') }}" class="fn__tooltip menu__item" data-position="right"--}}
-{{--                        title="AI Chat Bot">--}}
-{{--                        <span class="icon">--}}
-{{--                            <img src="{{ URL::asset('build/svg/chat.svg') }}" alt="" class="fn__svg">--}}
-{{--                        </span>--}}
-{{--                        <span class="text">AI Chat Bot</span>--}}
-{{--                    </a>--}}
-{{--                </li>--}}
-{{--            </ul>--}}
-{{--        </div>--}}
-        <!-- !#2 navigation group -->
 
         <!-- #3 navigation group -->
         <div class="nav_group">
@@ -124,9 +71,6 @@
                     </a>
                     <ul class="sub-menu">
                         <li>
-                            <a href="{{ url('/documentation') }}" class="menu__item"><span class="text">Documentation</span></a>
-                        </li>
-                        <li>
                             <a href="{{ url('/faq') }}" class="menu__item"><span class="text">FAQ</span></a>
                         </li>
                         <li>
@@ -136,9 +80,6 @@
                         </li>
                         <li>
                             <a href="{{ url('/contact') }}" class="menu__item"><span class="text">Contact Us</span></a>
-                        </li>
-                        <li>
-                            <a href="{{ url('/index-2') }}" class="menu__item"><span class="text">Home #2</span></a>
                         </li>
                     </ul>
                 </li>
