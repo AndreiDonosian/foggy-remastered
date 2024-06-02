@@ -9,6 +9,12 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::get('/', [\App\Http\Controllers\GuestController::class, 'index'])->name('guest.index');
+Route::get('/public-files/index', [\App\Http\Controllers\PublicFilesController::class, 'index'])->name('public.index');
+Route::post('/public-files/upload', [\App\Http\Controllers\PublicFilesController::class, 'upload'])->name('public.upload')
+    ->withoutMiddleware(\Illuminate\Foundation\Http\Middleware\VerifyCsrfToken::class);
+
+Route::get('/p/{path}', [\App\Http\Controllers\PublicFilesController::class, 'read'])->name('public.read');
+
 Auth::routes(['verify' => true]);
 
 Route::middleware(['auth', 'verified'])->group(function () {
@@ -37,7 +43,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
         ->withoutMiddleware(\Illuminate\Foundation\Http\Middleware\VerifyCsrfToken::class);
 
     Route::get('/file/read/{name}/{pin}', [\App\Http\Controllers\FileController::class, 'readFile'])->name('file.read');
+    Route::get('/file/read-enc/{name}/{pin}', [\App\Http\Controllers\FileController::class, 'readFileEncrypted'])->name('file.readEnc');
     Route::get('/file/public/{name}/{pin}', [\App\Http\Controllers\FileController::class, 'makePublic'])->name('file.public');
+    Route::get('/file/encoded/{name}/{pin}', [\App\Http\Controllers\FileController::class, 'makePublicEncoded'])->name('file.publicEnc');
     Route::get('/file/delete/{name}/{pin}', [\App\Http\Controllers\FileController::class, 'delete'])->name('file.delete');
 
 

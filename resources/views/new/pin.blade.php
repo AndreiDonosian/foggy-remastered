@@ -91,7 +91,7 @@
                     uploaderInit();
                     FrenifyTechWave.report()
                     FrenifyTechWave.publicLink()
-
+                    FrenifyTechWave.publicLinkEncoded();
 
                     let tInterHide = setInterval(function (){
                         document.querySelector('.generation_header').style.height = (staticHeight-=10)+'px';

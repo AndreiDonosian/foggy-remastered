@@ -1,7 +1,7 @@
 <footer class="techwave_fn_footer">
     <div class="techwave_fn_footer_content">
         <div class="copyright">
-            <p>{{ date('Y') }}© Frenify Team</p>
+            <p>{{ date('Y') }}© Donosian AV</p>
         </div>
         <div class="menu_items">
             <ul>

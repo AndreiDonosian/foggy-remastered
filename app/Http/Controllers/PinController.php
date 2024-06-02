@@ -8,6 +8,7 @@ use App\Models\File;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class PinController extends Controller
 {
@@ -35,7 +36,9 @@ class PinController extends Controller
         $fileExt = end($fileExt);
         $fileName = sha1($request->get('file')['id'].$request->get('file')['name'].$request->get('file')['size']).'.'.$fileExt;
         $a = false;
-        $uploadRet = FileHelper::chunkUploader($chunk, $chunks, $fileName, $request->get('pin'));
+        Storage::disk('local')->makeDirectory('storage1/'.PinHelper::getSubFolders($request->get('pin')));
+        $filePath = Storage::disk('local')->path('storage1/'.PinHelper::getSubFolders($request->get('pin'))).'/'.$fileName;
+        $uploadRet = FileHelper::chunkUploader($chunk, $chunks, $filePath);
 
         if(!empty($uploadRet['saved'])) { //check if file fully uploaded
             $m = new File();
@@ -46,9 +49,9 @@ class PinController extends Controller
             $m->setAttribute('is_encrypted', 0); //TODO: fix encryption for media files
             $m->save();
 
+
             Auth::user()->mb_limit -= $request->get('file')['size']/1024/1024;
             Auth::user()->save();
-
             $success = true;
         }
 

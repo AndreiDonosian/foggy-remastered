@@ -22,44 +22,44 @@
         <div class="fn__nav_bar">
 
             <!-- Search (bar item) -->
-            <div class="bar__item bar__item_search">
-                <a href="javascript:void(0);" class="item_opener fn__tooltip" title="Search">
-                    <img src="{{ URL::asset('build/svg/search.svg') }}" alt="" class="fn__svg">
-                </a>
-                <div class="item_popup" data-position="right">
-                    <input type="text" placeholder="Search">
-                </div>
-            </div>
+{{--            <div class="bar__item bar__item_search">--}}
+{{--                <a href="javascript:void(0);" class="item_opener fn__tooltip" title="Search">--}}
+{{--                    <img src="{{ URL::asset('build/svg/search.svg') }}" alt="" class="fn__svg">--}}
+{{--                </a>--}}
+{{--                <div class="item_popup" data-position="right">--}}
+{{--                    <input type="text" placeholder="Search">--}}
+{{--                </div>--}}
+{{--            </div>--}}
             <!-- !Search (bar item) -->
 
             <!-- Notification (bar item) -->
-            <div class="bar__item bar__item_notification has_notification">
-                <a href="javascript:void(0);" class="item_opener fn__tooltip" title="Notifications">
-                    <img src="{{ URL::asset('build/svg/bell.svg') }}" alt="" class="fn__svg">
-                </a>
-                <div class="item_popup" data-position="right">
-                    <div class="ntfc_header">
-                        <h2 class="ntfc_title">Notifications</h2>
-                        <a href="{{ url('/notifications') }}">View All</a>
-                    </div>
-                    <div class="ntfc_list">
-                        <ul>
-                            <li>
-                                <p><a href="{{ url('/notification-single') }}">Version 4.1.2 has been launched</a></p>
-                                <span>34 Min Ago</span>
-                            </li>
-                            <li>
-                                <p><a href="{{ url('/notification-single') }}">Video Generation has been released</a></p>
-                                <span>12 Apr</span>
-                            </li>
-                            <li>
-                                <p><a href="{{ url('/notification-single') }}">Terms has been updated</a></p>
-                                <span>12 Apr</span>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
+{{--            <div class="bar__item bar__item_notification has_notification">--}}
+{{--                <a href="javascript:void(0);" class="item_opener fn__tooltip" title="Notifications">--}}
+{{--                    <img src="{{ URL::asset('build/svg/bell.svg') }}" alt="" class="fn__svg">--}}
+{{--                </a>--}}
+{{--                <div class="item_popup" data-position="right">--}}
+{{--                    <div class="ntfc_header">--}}
+{{--                        <h2 class="ntfc_title">Notifications</h2>--}}
+{{--                        <a href="{{ url('/notifications') }}">View All</a>--}}
+{{--                    </div>--}}
+{{--                    <div class="ntfc_list">--}}
+{{--                        <ul>--}}
+{{--                            <li>--}}
+{{--                                <p><a href="{{ url('/notification-single') }}">Version 4.1.2 has been launched</a></p>--}}
+{{--                                <span>34 Min Ago</span>--}}
+{{--                            </li>--}}
+{{--                            <li>--}}
+{{--                                <p><a href="{{ url('/notification-single') }}">Video Generation has been released</a></p>--}}
+{{--                                <span>12 Apr</span>--}}
+{{--                            </li>--}}
+{{--                            <li>--}}
+{{--                                <p><a href="{{ url('/notification-single') }}">Terms has been updated</a></p>--}}
+{{--                                <span>12 Apr</span>--}}
+{{--                            </li>--}}
+{{--                        </ul>--}}
+{{--                    </div>--}}
+{{--                </div>--}}
+{{--            </div>--}}
             <!-- !Notification (bar item) -->
 
             <!-- Full Screen (bar item) -->
@@ -72,37 +72,37 @@
             <!-- !Full Screen (bar item) -->
 
             <!-- Language (bar item) -->
-            <div class="bar__item bar__item_language">
-                <a href="javascript:void(0);" class="item_opener fn__tooltip" title="Language">
-                    <img src="{{ URL::asset('build/svg/language.svg') }}" alt="" class="fn__svg">
-                </a>
-                <div class="item_popup" data-position="right">
-                    <ul>
-                        @foreach(['en', 'ru'] as $_lang)
-                            <li>
-                                @if($_lang==App::getLocale())
-                                <span class="active">{{$_lang}}</span>
-                                    @else
-                                    <a href="{{url(request()->path().'?lang='.$_lang)}}">{{$_lang}}</a>
-                                @endif
-                            </li>
-                        @endforeach
+{{--            <div class="bar__item bar__item_language">--}}
+{{--                <a href="javascript:void(0);" class="item_opener fn__tooltip" title="Language">--}}
+{{--                    <img src="{{ URL::asset('build/svg/language.svg') }}" alt="" class="fn__svg">--}}
+{{--                </a>--}}
+{{--                <div class="item_popup" data-position="right">--}}
+{{--                    <ul>--}}
+{{--                        @foreach(['en', 'ru'] as $_lang)--}}
+{{--                            <li>--}}
+{{--                                @if($_lang==App::getLocale())--}}
+{{--                                <span class="active">{{$_lang}}</span>--}}
+{{--                                    @else--}}
+{{--                                    <a href="{{url(request()->path().'?lang='.$_lang)}}">{{$_lang}}</a>--}}
+{{--                                @endif--}}
+{{--                            </li>--}}
+{{--                        @endforeach--}}
 
 {{--                        <li>--}}
 {{--                            <a href="javascript:void(0);">French</a>--}}
 {{--                        </li>--}}
-                    </ul>
-                </div>
-            </div>
+{{--                    </ul>--}}
+{{--                </div>--}}
+{{--            </div>--}}
             <!-- !Language (bar item) -->
 
             <!-- Site Skin (bar item) -->
-            <div class="bar__item bar__item_skin">
-                <a href="javascript:void(0);" class="item_opener fn__tooltip" title="Dark/Light">
-                    <img src="{{ URL::asset('build/svg/sun.svg') }}" alt="" class="fn__svg light_mode">
-                    <img src="{{ URL::asset('build/svg/moon.svg') }}" alt="" class="fn__svg dark_mode">
-                </a>
-            </div>
+{{--            <div class="bar__item bar__item_skin">--}}
+{{--                <a href="javascript:void(0);" class="item_opener fn__tooltip" title="Dark/Light">--}}
+{{--                    <img src="{{ URL::asset('build/svg/sun.svg') }}" alt="" class="fn__svg light_mode">--}}
+{{--                    <img src="{{ URL::asset('build/svg/moon.svg') }}" alt="" class="fn__svg dark_mode">--}}
+{{--                </a>--}}
+{{--            </div>--}}
             <!-- !Site Skin (bar item) -->
 
             <!-- User (bar item) -->

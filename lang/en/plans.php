@@ -15,4 +15,5 @@ return [
 
     'basic' => 'Basic',
     'description' => ' - You got only 10MB for free usage, please upgrade to use more!',
+    'not_enough_credits'=> 'Please update your credits.'
 ];

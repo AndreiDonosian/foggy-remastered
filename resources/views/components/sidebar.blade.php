@@ -38,7 +38,16 @@
                         <span class="icon">
                             <img src="{{ URL::asset('build/svg/home.svg') }}" alt="" class="fn__svg">
                         </span>
-                        <span class="text">Pin (Implemented)</span>
+                        <span class="text">File storage</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ route('public.index') }}" class="fn__tooltip active menu__item" data-position="right"
+                       title="Process encrypted files">
+                        <span class="icon">
+                            <img src="{{ URL::asset('build/svg/cube.svg') }}" alt="" class="fn__svg">
+                        </span>
+                        <span class="text">Process encrypted files</span>
                     </a>
                 </li>
             </ul>

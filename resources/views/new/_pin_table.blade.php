@@ -19,9 +19,9 @@
                                         <li>
                                             <a href="{{route('file.read', ['name'=>$file['meta']['name'], 'pin'=>$pin])}}">Original File</a>
                                         </li>
-                                        <li>
-                                            <a href="javascript:void(0);">Encrypted File</a>
-                                        </li>
+{{--                                        <li>--}}
+{{--                                            <a href="javascript:void(0);">Encrypted File</a>--}}
+{{--                                        </li>--}}
                                     </ul>
                                 </div>
                             </div>
@@ -35,7 +35,7 @@
                                             <a href="javascript:void(0);" data-type="link" data-url="{{route('file.public', ['pin'=>$pin, 'name'=>$file['meta']['name']])}}" class="fn__publicLink">Create Download link</a>
                                         </li>
                                         <li>
-                                            <a href="javascript:void(0);">Create download link (encrypted)</a>
+                                            <a href="javascript:void(0);" data-type="enclink" data-url="{{route('file.publicEnc', ['pin'=>$pin, 'name'=>$file['meta']['name']])}}" class="fn__encPublicLink">Create download link (encrypted)</a>
                                         </li>
                                     </ul>
                                 </div>

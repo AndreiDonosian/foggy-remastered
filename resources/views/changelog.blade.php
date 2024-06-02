@@ -19,6 +19,23 @@
                 <!-- Changelog-->
                 <div class="techwave_fn_changelog">
 
+                    <div class="changelog__item">
+                        <div class="item__header">
+                            <div class="item__ver">v1.1.0</div>
+                            <div class="item__date">June 3, 2024</div>
+                        </div>
+                        <div class="item__content">
+                            <div class="item__group">
+                                <div class="item__title"><span>New</span></div>
+                                <ul class="item__list">
+                                    <li>Encryption added</li>
+                                    <li>Encryption public link</li>
+                                    <li>Public file support</li>
+                                    <li>Encrypt processer</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
                     <!-- #1 changelog item -->
                     <div class="changelog__item">
                         <div class="item__header">

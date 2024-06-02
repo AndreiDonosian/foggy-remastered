@@ -17,58 +17,63 @@ class FileController extends Controller
         $files = PinHelper::getPathFolders($pin);
 
         foreach ($files as $_file) {
-            if($_file['meta']['name']==$name) {
+            if ($_file['meta']['name'] == $name) {
                 $found = true;
                 break;
             }
         }
-        if(!empty($found)) {
+        if (!empty($found)) {
             $succ = unlink($_file['meta']['path']);
             File::where('id', $_file['meta']['id'])->delete();
         }
 
         return [
-            'deleted'=>$succ,
-            'found'=>$found
+            'deleted' => $succ,
+            'found' => $found
         ];
     }
 
     public function makePublic(string $name, string $pin)
     {
-        $files = PinHelper::getPathFolders($pin);
-        $found = false;
+        $_file = FileHelper::getFileByName($name, $pin);
         $path = '';
-        foreach ($files as $_file) {
-            if($_file['meta']['name']==$name) {
-                $found = true;
-                break;
-            }
-        }
 
-        if($found) {
+        if ($_file) {
             $path = FileHelper::makeFilePublic($_file['meta']['path'], $_file['meta']['name']);
             $pos = stripos($path, '/app/public/');
-            $path = url('/storage/'.substr($path, $pos+12));
+            $path = url('/storage/' . substr($path, $pos + 12));
         }
 
         return [
-            'path'=>$path
+            'path' => $path
         ];
+    }
+
+    public function makePublicEncoded(string $name, string $pin)
+    {
+        $_file = FileHelper::getFileByName($name, $pin);
+        $path = '';
+
+        if ($_file) {
+            $newPath = explode('.', $_file['meta']['path']);
+            unset($newPath[count($newPath) - 1]);
+            $newPath = join('.', $newPath) . '.avks';
+            FileHelper::encryptFile($_file['meta']['path'], $newPath, request()->get('key'));
+
+            $path = FileHelper::makeFilePublic($newPath, $_file['meta']['origname'].'.avks');
+            $pos = stripos($path, '/app/public/');
+            $path = route('public.read', ['path'=>str_replace('/','-00-', 'storage/' . substr($path, $pos + 12))]);
+        }
+
+        return ['path'=>$path];
     }
 
     public function readFile(string $name, string $pin)
     {
-        $files = PinHelper::getPathFolders($pin);
-        $found = false;
+        $_file = FileHelper::getFileByName($name, $pin);
 
-        foreach ($files as $_file) {
-            if($_file['meta']['name']==$name) {
-                $found = true;
-                break;
-            }
-        }
-        if($found) {
-            if(!file_exists($_file['meta']['path'])){ // file does not exist
+        if ($_file) {
+            if (!file_exists($_file['meta']['path'])) { // file does not exist
                 die('file not found');
             } else {
                 header("Cache-Control: public");
@@ -80,7 +85,37 @@ class FileController extends Controller
                 // read the file from disk
                 readfile($_file['meta']['path']);
             }
+        } else {
+            abort(401);
         }
+    }
 
+    public function readFileEncrypted(string $name, string $pin)
+    {
+        $_file = FileHelper::getFileByName($name, $pin);
+
+        if ($_file) {
+            if (!file_exists($_file['meta']['path'])) { // file does not exist
+                die('file not found');
+            } else {
+
+                $newPath = explode('.', $_file['meta']['path']);
+                unset($newPath[count($newPath) - 1]);
+                $newPath = join('.', $_file) . '.avks';
+
+                FileHelper::encryptFile($_file['meta']['path'], $newPath, request()->post('key'));
+
+                header("Cache-Control: public");
+                header("Content-Description: File Transfer");
+                header("Content-Disposition: attachment; filename={$_file['meta']['origname']}");
+                header("Content-Type: {$_file['meta']['type']}");
+                header("Content-Transfer-Encoding: binary");
+
+                // read the file from disk
+                readfile($newPath);
+            }
+        } else {
+            abort(401);
+        }
     }
 }

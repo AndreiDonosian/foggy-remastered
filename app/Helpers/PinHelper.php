@@ -18,19 +18,21 @@ class PinHelper
                     continue; //skip . and ..
                 if(is_file(storage_path('app/storage1/').$subFolders.'/'.$file)) {
                     $fileStored = File::where('file_name', $file)->where('user_id', Auth::user()->getAuthIdentifier())->first();
+                    if($fileStored) {
+                        $output[] = [
+                            'public_path'=>'/build/img/gallery/1.jpg',
+                            'randId'=>sha1(mt_rand(0, time())),
+                            'meta'=>[
+                                'size'=> number_format(filesize(storage_path('app/storage1/').$subFolders.'/'.$file)/1024/1024,2) . 'MB',
+                                'type'=>mime_content_type(storage_path('app/storage1/').$subFolders.'/'.$file),
+                                'name'=>$fileStored->file_orig_name??$file,
+                                'origname'=>$file,
+                                'path'=>storage_path('app/storage1/').$subFolders.'/'.$file,
+                                'id'=>$fileStored->id
+                            ]
+                        ];
+                    }
 
-                    $output[] = [
-                        'public_path'=>'/build/img/gallery/1.jpg',
-                        'randId'=>sha1(mt_rand(0, time())),
-                        'meta'=>[
-                            'size'=> number_format(filesize(storage_path('app/storage1/').$subFolders.'/'.$file)/1024/1024,2) . 'MB',
-                            'type'=>mime_content_type(storage_path('app/storage1/').$subFolders.'/'.$file),
-                            'name'=>$fileStored->file_orig_name??$file,
-                            'origname'=>$file,
-                            'path'=>storage_path('app/storage1/').$subFolders.'/'.$file,
-                            'id'=>$fileStored->id
-                        ]
-                    ];
                 }
             }
         }

@@ -61,6 +61,7 @@ var FrenifyTechWave = {
         this.imgToSVG();
         this.BgImg();
         this.popupMobile();
+        this.publicLinkEncoded();
     },
 
     marquee: function () {
@@ -509,7 +510,7 @@ var FrenifyTechWave = {
             },
             about: {
                 type: "text",
-                description: "some information about the Frenify team",
+                description: "some information about the Donosian AV",
                 text: "<p>Frenify was founded in 2017. The company began working with the first customers, giving them the opportunity to purchase high-quality HTML templates.</p><p>The company’s products began to grow in terms of complexity and aesthetics. Frenify currently has a wide range of HTML templates, WordPress themes, WordPress plugins, Photoshop projects; paid and absolutely free products.</p><p>Design projects are unique and aesthetically pleasing based on customer requirements. Visit our website to get acquainted with our products. Thank you so much for being with us.</p>",
                 append: true,
             },
@@ -1484,7 +1485,65 @@ var FrenifyTechWave = {
                     })
             });
     },
+    publicLinkEncoded: function () {
+        var _class = '.techwave_fn_report';
+        var _container = '';
+        var linkbox = $(_class);
+        $(".fn__encPublicLink")
+            .off()
+            .on("click", async function () {
+                var e = $(this),
+                    id = e.data("id");
 
+                var _url = e.data('url');
+                var _parentId = e.data('parent-id');
+                var _type = e.data('type');
+                linkbox.find('.title').text('Enter crypt code:');
+                linkbox.find('.subtitle').html("<input style='width: 100%' type='text' class='input' placeholder='Any value set here' id='code'/>");
+                linkbox.find('.report').text('Generate link!');
+
+                document.querySelector(_class+" .report").setAttribute('data-url', _url)
+                document.querySelector(_class+" .report").setAttribute('data-parent-id', _parentId)
+                document.querySelector(_class+" .report").setAttribute('data-type', _type)
+
+                if (linkbox.hasClass("opened")) {
+                    linkbox.removeClass("opened");
+                } else {
+                    linkbox.addClass("opened");
+                }
+
+
+                linkbox.find('.report, .report>span')
+                    .off()
+                    .on('click', async function (e) {
+                        await fetch(_url+'?key='+document.querySelector('#code').value, {
+                            method: "GET",
+                        }).then(async (response) => {
+                            const body = JSON.parse(await response.text());
+                            linkbox.find('.title').text('Link is here :');
+                            linkbox.find('.subtitle').html(body.path);
+                            linkbox.find('.report').text('Copy!');
+                            let _downButton = linkbox.find('.report')[0].cloneNode(true);
+                            _downButton.textContent = 'Download';
+                            _downButton.setAttribute('download', true);
+                            _downButton.classList.remove('report');
+                            _downButton.setAttribute('href', body.path);
+                            // _downButton.setAttribute('target', '_blank');
+
+                            linkbox.find('.btns').prepend(_downButton);
+                            linkbox.find('.report, .report>span')
+                                .off()
+                                .on('click', async function (e) {
+                                    navigator.clipboard.writeText(linkbox.find('.subtitle').text())
+                                    FrenifyTechWave.report();
+                                    linkbox.removeClass("opened");
+                                })
+
+                        });
+
+                    })
+            });
+    },
     report: function () {
         var reportbox = $(".techwave_fn_report");
         $(".fn__report")

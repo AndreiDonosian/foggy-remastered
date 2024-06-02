@@ -7252,3 +7252,6 @@ a.fn__like.no_border .fn__svg{
 .techwave_fn_doc_page .acc__header, .techwave_fn_doc_page .acc__title {
     margin-bottom: 0;
 }
+.d-none {
+	display: none;
+}

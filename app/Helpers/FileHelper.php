@@ -9,19 +9,31 @@ use Illuminate\Support\Facades\Storage;
 class FileHelper
 {
 
-    const FILE_ENCRYPTION_BLOCKS = 10000;
+    const FILE_ENCRYPTION_BLOCKS = 10;
+
+    protected static function getEncryptionBlocks(string $key): int
+    {
+        $numberBlocks = 0;
+
+        foreach (str_split($key) as $char) {
+            $numberBlocks+= ord($char);
+        }
+
+        return $numberBlocks;
+    }
 
     /**
-     * @param  $source  Path of the unencrypted file
-     * @param  $dest  Path of the encrypted file to created
-     * @param  $key  mixed Encryption key
+     * @param string $source  Path of the unencrypted file
+     * @param string  $dest  Path of the encrypted file to created
+     * @param mixed $key  Encryption key
      */
 
-    public static function encryptFile($source, $dest, $key): void
+    public static function encryptFile(string $source, string $dest, mixed $key): void
     {
         $cipher = 'aes-256-cbc';
         $ivLenght = openssl_cipher_iv_length($cipher);
         $iv = openssl_random_pseudo_bytes($ivLenght);
+        $filesize = filesize($source)*10;
 
         $fpSource = fopen($source, 'rb');
         $fpDest = fopen($dest, 'w');
@@ -29,10 +41,9 @@ class FileHelper
         fwrite($fpDest, $iv);
 
         while (!feof($fpSource)) {
-            $plaintext = fread($fpSource, $ivLenght * self::FILE_ENCRYPTION_BLOCKS);
+            $plaintext = fread($fpSource, $ivLenght * self::getEncryptionBlocks($key));
             $ciphertext = openssl_encrypt($plaintext, $cipher, $key, OPENSSL_RAW_DATA, $iv);
             $iv = substr($ciphertext, 0, $ivLenght);
-
             fwrite($fpDest, $ciphertext);
         }
 
@@ -41,11 +52,11 @@ class FileHelper
     }
 
     /**
-     * @param  $source  Path of the encrypted file
-     * @param  $dest  Path of the decrypted file
-     * @param  $key  Encryption key
+     * @param string $source  Path of the encrypted file
+     * @param string $dest  Path of the decrypted file
+     * @param mixed $key  Encryption key
      */
-    public static function decryptFile($source, $dest, $key): void
+    public static function decryptFile(string $source,string $dest,mixed $key): void
     {
         $cipher = 'aes-256-cbc';
         $ivLenght = openssl_cipher_iv_length($cipher);
@@ -56,9 +67,9 @@ class FileHelper
         $iv = fread($fpSource, $ivLenght);
 
         while (!feof($fpSource)) {
-            $ciphertext = fread($fpSource, $ivLenght * (self::FILE_ENCRYPTION_BLOCKS+1));
+            $ciphertext = fread($fpSource, $ivLenght * (self::getEncryptionBlocks($key)+1));
             $plaintext = openssl_decrypt($ciphertext, $cipher, $key, OPENSSL_RAW_DATA, $iv);
-            $iv = substr($plaintext, 0, $ivLenght);
+            $iv = substr($ciphertext, 0, $ivLenght);
 
             fwrite($fpDest, $plaintext);
         }
@@ -67,11 +78,8 @@ class FileHelper
         fclose($fpDest);
     }
 
-    public static function chunkUploader(int $chunk, int $chunks, $fileName, mixed $pin)
+    public static function chunkUploader(int $chunk, int $chunks, $filePath)
     {
-        // Open temp file
-        Storage::disk('local')->makeDirectory('storage1/'.PinHelper::getSubFolders($pin));
-        $filePath = Storage::disk('local')->path('storage1/'.PinHelper::getSubFolders($pin)).'/'.$fileName;
 
         $out = fopen("{$filePath}.part", $chunk == 0 ? "wb" : "ab");
         if ($out) {
@@ -97,7 +105,7 @@ class FileHelper
             // Strip the temp .part suffix off
             $saved = true;
             rename("{$filePath}.part", $filePath);
-        } else {}
+        }
 
         return ['success' => true, 'saved'=>$saved, 'path'=>$filePath];
     }
@@ -106,6 +114,12 @@ class FileHelper
     {
         Storage::disk('local')->makeDirectory('public/'.PinHelper::getSubFolders(Auth::user()->email));
         $publicPath = Storage::disk('local')->path('public/'.PinHelper::getSubFolders(Auth::user()->email));
+
+        $existed = PublicFiles::where('path', $publicPath.'/'.$fileName)->first();
+
+        if($existed) {
+            return $publicPath.'/'.$fileName;
+        }
 
         copy($localFilePath, $publicPath.'/'.$fileName);
 
@@ -122,6 +136,18 @@ class FileHelper
     public static function getAbsolutePath(string $path): string
     {
         return substr(public_path('storage/' .$path), 6);
+    }
+
+    public static function getFileByName(string $name, string $pin, string $nameField = 'name')
+    {
+        $files = PinHelper::getPathFolders($pin);
+        foreach ($files as $_file) {
+            if($_file['meta'][$nameField]==$name) {
+                return $_file;
+            }
+        }
+
+        return [];
     }
 
 
