@@ -13,8 +13,6 @@
             <a href="/login" class="techwave_fn_button" style="position: absolute;top:35px;right: 25px">Go to project</a>
 
         </div>
-        <div class="">
-        </div>
         <!-- !Page Title -->
 
         <div class="privacypage">
@@ -25,12 +23,14 @@
                 <hr>
 
                 <h4 class="fn__animated_text">Why Choose Us?</h4>
-                <p> (dots) <b>Flexible Storage Options:</b> From personal and cloud storage to commercial use solutions, we offer a variety of storage products designed to suit your specific data requirements.</p>
-                <p><b>Competitive Pricing:</b> Enjoy affordable rates and scalable plans that grow with your needs.</p>
-                <p><b>Fast and Reliable Access:</b> Our state-of-the-art infrastructure ensures quick access and high availability, so your data is always within reach when you need it.</p>
-                <p><b>Unmatched Security:</b> Your data is safe with us. Our advanced encryption and unique security script ensure that no one but you can access your data. With our system, you have exclusive control and peace of mind knowing your information is completely secure.</p>
-                <p><b>Expert Support:</b> Our team of experienced data specialists is here to guide you every step of the way, providing personalized advice and support.</p>
-                <p><b>CTransparent Terms:</b> No hidden fees or surprises. We believe in complete transparency, ensuring you understand all aspects of our services.</p>
+            <ul>
+                <li><b>Flexible Storage Options:</b> From personal and cloud storage to commercial use solutions, we offer a variety of storage products designed to suit your specific data requirements.</li>
+                <li><b>Competitive Pricing:</b> Enjoy affordable rates and scalable plans that grow with your needs.</li>
+                <li><b>Fast and Reliable Access:</b> Our state-of-the-art infrastructure ensures quick access and high availability, so your data is always within reach when you need it.</li>
+                <li><b>Unmatched Security:</b> Your data is safe with us. Our advanced encryption and unique security script ensure that no one but you can access your data. With our system, you have exclusive control and peace of mind knowing your information is completely secure.</li>
+                <li><b>Expert Support:</b> Our team of experienced data specialists is here to guide you every step of the way, providing personalized advice and support.</li>
+                <li><b>Transparent Terms:</b> No hidden fees or surprises. We believe in complete transparency, ensuring you understand all aspects of our services.</li>
+            </ul>
                 <hr>
 
                 <h4 class="fn__animated_text">Special Offers</h4>
@@ -41,7 +41,7 @@
 
                 <h4 class="fn__animated_text">Contact Us</h4>
                 <p>Have questions or need assistance? Our friendly customer service team (link to contact service team) is here to help.</p>
-                <p>Contact us at mailto:test@example.com or visit our (-> link to page with FAQ) FAQ section for more information.</p>
+                <p>Contact us at <a href="mailto:contact(-a-t-)avks.cloud">Contact.Avks.cloud</a> or visit our (-> link to page with FAQ) FAQ section for more information.</p>
                 <hr>
 
                 <h4 class="fn__animated_text">Start to secure your data today</h4>
