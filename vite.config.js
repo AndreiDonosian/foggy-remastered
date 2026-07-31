@@ -45,6 +45,10 @@ export default defineConfig({
                             folder.src_assets + "svg",
                             folder.dist_assets + "svg"
                         ),
+                        fs.copy(
+                            folder.src_assets + "fonts",
+                            folder.dist_assets + "fonts"
+                        ),
                     ]);
                 } catch (error) {
                     console.error("Error copying assets:", error);

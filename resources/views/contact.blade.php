@@ -20,24 +20,25 @@
                 <p>Please fill out the form with your contact information and a detailed message, and we will get back to you as soon as possible. Your privacy is important to us, and we will never share your information with third parties.</p>
                 
                 <div class="fn_contact_form">
-                    <form action="/contact/submit" method="post" class="contact_form" id="contact_form" autocomplete="off">
+                    <form action="{{ route('contact.submit') }}" method="post" class="contact_form" id="contact_form" autocomplete="off">
+                        @csrf
                         <div class="input_list">
                             <ul>
                                 <li>
-                                    <input id="name" type="text" placeholder="Full Name *" />
+                                    <input id="name" name="name" type="text" placeholder="Full Name *" />
                                 </li>
                                 <li>
-                                    <input id="email" type="text" placeholder="Email *" />
+                                    <input id="email" name="email" type="email" placeholder="Email *" />
                                 </li>
                                 <li>
-                                    <input id="tel" type="text" placeholder="Phone" />
+                                    <input id="tel" name="tel" type="text" placeholder="Phone" />
                                 </li>
                                 <li>
-                                    <textarea id="message" placeholder="Your Message *"></textarea>
+                                    <textarea id="message" name="message" placeholder="Your Message *"></textarea>
                                 </li>
                                 <li>
                                     <div>
-                                        <a id="send_message" href="javascript:void(0);" class="techwave_fn_button">
+                                        <a id="contact_send" href="javascript:void(0);" class="techwave_fn_button">
                                             <span>Send Message</span>
                                         </a>
                                     </div>
@@ -63,4 +64,75 @@
         </div>        
     </div>
     <!-- !FAQ Page -->
+
+    <script>
+        (function () {
+            var trigger = document.getElementById('contact_send');
+            if (!trigger) return;
+            var form = document.getElementById('contact_form');
+            var box = form.querySelector('.returnmessage');
+            var emptyNotice = form.querySelector('.empty_notice');
+            var sending = false;
+
+            function show(html, isError) {
+                box.innerHTML = "<span class='" + (isError ? 'contact_error' : 'contact_success') + "'>" + html + "</span>";
+                box.style.display = 'block';
+            }
+
+            trigger.addEventListener('click', function () {
+                if (sending) return;
+
+                var name = form.querySelector('#name').value.trim();
+                var email = form.querySelector('#email').value.trim();
+                var tel = form.querySelector('#tel').value.trim();
+                var message = form.querySelector('#message').value.trim();
+
+                box.innerHTML = '';
+
+                if (name === '' || email === '' || message === '') {
+                    emptyNotice.style.display = 'block';
+                    setTimeout(function () { emptyNotice.style.display = 'none'; }, 2500);
+                    return;
+                }
+
+                sending = true;
+                trigger.classList.add('disabled');
+
+                var token = form.querySelector('input[name="_token"]').value;
+                var payload = new URLSearchParams({ name: name, email: email, tel: tel, message: message });
+
+                fetch(form.getAttribute('action'), {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRF-TOKEN': token,
+                        'X-Requested-With': 'XMLHttpRequest',
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                    },
+                    body: payload.toString()
+                })
+                    .then(function (res) {
+                        return res.json().then(function (data) { return { ok: res.ok, data: data }; });
+                    })
+                    .then(function (r) {
+                        if (r.ok && r.data.success) {
+                            show(r.data.message || box.getAttribute('data-success'), false);
+                            form.reset();
+                        } else if (r.data && r.data.errors) {
+                            var first = Object.values(r.data.errors)[0];
+                            show(Array.isArray(first) ? first[0] : first, true);
+                        } else {
+                            show((r.data && r.data.message) || 'Something went wrong. Please try again.', true);
+                        }
+                    })
+                    .catch(function () {
+                        show('Network error. Please try again in a moment.', true);
+                    })
+                    .finally(function () {
+                        sending = false;
+                        trigger.classList.remove('disabled');
+                    });
+            });
+        })();
+    </script>
 </x-layouts.auth>

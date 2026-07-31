@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace Carbon;
 
 use Closure;
+use DateTime;
 use DateTimeImmutable;
 use DateTimeInterface;
 use DateTimeZone;
@@ -44,13 +45,13 @@ use Throwable;
  * @method ?Carbon             createFromLocaleIsoFormat(string $format, string $locale, string $time, $timezone = null)                                            Create a Carbon instance from a specific ISO format and a string in a given language.
  * @method Carbon              createFromTime($hour = 0, $minute = 0, $second = 0, $timezone = null)                                                                Create a Carbon instance from just a time. The date portion is set to today.
  * @method Carbon              createFromTimeString(string $time, DateTimeZone|string|int|null $timezone = null)                                                    Create a Carbon instance from a time string. The date portion is set to today.
- * @method Carbon              createFromTimestamp(string|int|float $timestamp, DateTimeZone|string|int|null $timezone = null)                                      Create a Carbon instance from a timestamp and set the timezone (use default one if not specified).
+ * @method Carbon              createFromTimestamp(string|int|float $timestamp, DateTimeZone|string|int|null $timezone = null)                                      Create a Carbon instance from a timestamp and set the timezone (UTC by default).
  *                                                                                                                                                                  Timestamp input can be given as int, float or a string containing one or more numbers.
  * @method Carbon              createFromTimestampMs(string|int|float $timestamp, DateTimeZone|string|int|null $timezone = null)                                    Create a Carbon instance from a timestamp in milliseconds.
  *                                                                                                                                                                  Timestamp input can be given as int, float or a string containing one or more numbers.
  * @method Carbon              createFromTimestampMsUTC($timestamp)                                                                                                 Create a Carbon instance from a timestamp in milliseconds.
  *                                                                                                                                                                  Timestamp input can be given as int, float or a string containing one or more numbers.
- * @method Carbon              createFromTimestampUTC(string|int|float $timestamp)                                                                                  Create a Carbon instance from an timestamp keeping the timezone to UTC.
+ * @method Carbon              createFromTimestampUTC(string|int|float $timestamp)                                                                                  Create a Carbon instance from a timestamp keeping the timezone to UTC.
  *                                                                                                                                                                  Timestamp input can be given as int, float or a string containing one or more numbers.
  * @method Carbon              createMidnightDate($year = null, $month = null, $day = null, $timezone = null)                                                       Create a Carbon instance from just a date. The time portion is set to midnight.
  * @method ?Carbon             createSafe($year = null, $month = null, $day = null, $hour = null, $minute = null, $second = null, $timezone = null)                 Create a new safe Carbon instance from a specific date and time.
@@ -65,10 +66,12 @@ use Throwable;
  * @method Carbon              createStrict(?int $year = 0, ?int $month = 1, ?int $day = 1, ?int $hour = 0, ?int $minute = 0, ?int $second = 0, $timezone = null)   Create a new Carbon instance from a specific date and time using strict validation.
  * @method mixed               executeWithLocale(string $locale, callable $func)                                                                                    Set the current locale to the given, execute the passed function, reset the locale to previous one,
  *                                                                                                                                                                  then return the result of the closure (or null if the closure was void).
- * @method Carbon              fromSerialized($value)                                                                                                               Create an instance from a serialized string.
+ * @method Carbon              fromSerialized($value, array $options = [])                                                                                          Create an instance from a serialized string.
+ *                                                                                                                                                                  If $value is not from a trusted source, consider using the allowed_classes option to limit
+ *                                                                                                                                                                  the types of objects that can be built, for instance:
  * @method array               getAvailableLocales()                                                                                                                Returns the list of internally available locales and already loaded custom locales.
  *                                                                                                                                                                  (It will ignore custom translator dynamic loading.)
- * @method Language[]          getAvailableLocalesInfo()                                                                                                            Returns list of Language object for each available locale. This object allow you to get the ISO name, native
+ * @method array               getAvailableLocalesInfo()                                                                                                            Returns list of Language object for each available locale. This object allow you to get the ISO name, native
  *                                                                                                                                                                  name, region and variant of the locale.
  * @method array               getDays()                                                                                                                            Get the days of the week.
  * @method ?string             getFallbackLocale()                                                                                                                  Get the fallback locale.
@@ -96,7 +99,7 @@ use Throwable;
  *                                                                                                                                                                  Support is considered enabled if the 4 sentences are translated in the given locale.
  * @method bool                localeHasShortUnits(string $locale)                                                                                                  Returns true if the given locale is internally supported and has short-units support.
  *                                                                                                                                                                  Support is considered enabled if either year, day or hour has a short variant translated.
- * @method ?Carbon             make($var)                                                                                                                           Make a Carbon instance from given variable if possible.
+ * @method ?Carbon             make($var, DateTimeZone|string|null $timezone = null)                                                                                Make a Carbon instance from given variable if possible.
  *                                                                                                                                                                  Always return a new instance. Parse only strings and only these likely to be dates (skip intervals
  *                                                                                                                                                                  and recurrences). Throw an exception for invalid format, but otherwise return null.
  * @method void                mixin(object|string $mixin)                                                                                                          Mix another object into the class.
@@ -203,9 +206,9 @@ class Factory
         'v' => '([0-9]{1,3})',
         'e' => '([a-zA-Z]{1,5})|([a-zA-Z]*\\/[a-zA-Z]*)',
         'I' => '(0|1)',
-        'O' => '([+-](1[012]|0[0-9])[0134][05])',
-        'P' => '([+-](1[012]|0[0-9]):[0134][05])',
-        'p' => '(Z|[+-](1[012]|0[0-9]):[0134][05])',
+        'O' => '([+-](1[0123]|0[0-9])[0134][05])',
+        'P' => '([+-](1[0123]|0[0-9]):[0134][05])',
+        'p' => '(Z|[+-](1[0123]|0[0-9]):[0134][05])',
         'T' => '([a-zA-Z]{1,5})',
         'Z' => '(-?[1-5]?[0-9]{1,4})',
         'U' => '([0-9]*)',
@@ -251,7 +254,7 @@ class Factory
         return $this;
     }
 
-    public function className(string $className = null): self|string
+    public function className(?string $className = null): self|string
     {
         return $className === null ? $this->getClassName() : $this->setClassName($className);
     }
@@ -268,7 +271,7 @@ class Factory
         return $this;
     }
 
-    public function settings(array $settings = null): self|array
+    public function settings(?array $settings = null): self|array
     {
         return $settings === null ? $this->getSettings() : $this->setSettings($settings);
     }
@@ -318,6 +321,8 @@ class Factory
      * });
      * echo $factory->yesterday()->hours(11)->userFormat();
      * ```
+     *
+     * @param-closure-this  static  $macro
      */
     public function macro(string $name, ?callable $macro): void
     {
@@ -549,15 +554,12 @@ class Factory
 
     /**
      * Set a Carbon instance (real or mock) to be returned when a "now"
-     * instance is created.  The provided instance will be returned
+     * instance is created. The provided instance will be returned
      * specifically under the following conditions:
      *   - A call to the static now() method, ex. Carbon::now()
      *   - When a null (or blank string) is passed to the constructor or parse(), ex. new Carbon(null)
      *   - When the string "now" is passed to the constructor or parse(), ex. new Carbon('now')
      *   - When a string containing the desired time is passed to Carbon::parse().
-     *
-     * Note the timezone parameter was left out of the examples above and
-     * has no affect as the mock value will be returned regardless of its value.
      *
      * Only the moment is mocked with setTestNow(), the timezone will still be the one passed
      * as parameter of date_default_timezone_get() as a fallback (see setTestNowAndTimezone()).
@@ -572,14 +574,14 @@ class Factory
     public function setTestNow(mixed $testNow = null): void
     {
         $this->useTimezoneFromTestNow = false;
-        $this->testNow = $testNow instanceof self || $testNow instanceof Closure
+        $this->testNow = $testNow instanceof Closure
             ? $testNow
             : $this->make($testNow);
     }
 
     /**
      * Set a Carbon instance (real or mock) to be returned when a "now"
-     * instance is created.  The provided instance will be returned
+     * instance is created. The provided instance will be returned
      * specifically under the following conditions:
      *   - A call to the static now() method, ex. Carbon::now()
      *   - When a null (or blank string) is passed to the constructor or parse(), ex. new Carbon(null)
@@ -637,12 +639,13 @@ class Factory
      */
     public function withTestNow(mixed $testNow, callable $callback): mixed
     {
+        $previousTestNow = $this->getTestNow();
         $this->setTestNow($testNow);
 
         try {
             $result = $callback();
         } finally {
-            $this->setTestNow();
+            $this->setTestNow($previousTestNow);
         }
 
         return $result;
@@ -691,9 +694,19 @@ class Factory
             }
 
             if (!($testNow instanceof CarbonInterface)) {
-                $timezone ??= $this->useTimezoneFromTestNow ? $testNow->getTimezone() : null;
+                $timezone ??= $this->useTimezoneFromTestNow
+                    ? $testNow->getTimezone()
+                    : new CarbonTimeZone(date_default_timezone_get());
                 $testNow = $this->__call('instance', [$testNow, $timezone]);
             }
+        }
+
+        if ($testNow !== null && $timezone === null) {
+            if ($testNow instanceof DateTime) {
+                $testNow = clone $testNow;
+            }
+
+            $testNow = $testNow->setTimezone(date_default_timezone_get());
         }
 
         return $testNow;

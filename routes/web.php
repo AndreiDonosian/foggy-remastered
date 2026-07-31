@@ -52,6 +52,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/ajax/credits-check', [\App\Http\Controllers\CreditsController::class, 'check']);
 
 
+    Route::post('/contact/submit', [\App\Http\Controllers\ContactController::class, 'submit'])->name('contact.submit');
+
+
     // common all page routes
     Route::get('{any}', [HomeController::class, 'pageView']);
 });

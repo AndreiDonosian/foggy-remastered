@@ -45,6 +45,16 @@
                         <label for="password-confirm">Confirm Password <span>*</span></label>
                         <input type="password" id="password-confirm" name="password_confirmation" required autocomplete="new-password" autocomplete="current-password" spellcheck="false" placeholder="Enter confirm password">
                     </div>
+                    @if (config('services.hcaptcha.sitekey'))
+                        <div class="form__captcha">
+                            <div class="h-captcha" data-sitekey="{{ config('services.hcaptcha.sitekey') }}"></div>
+                            @error('h-captcha-response')
+                                <span class="input-error" role="alert">
+                                    <small>{{ $message }}</small>
+                                </span>
+                            @enderror
+                        </div>
+                    @endif
                     <div class="form__submit">
                         <label class="fn__submit">
                             <input type="submit" name="submit" value="Create Account">
@@ -67,5 +77,9 @@
 
     </div>
     <!-- !Sign Up -->
+
+    @if (config('services.hcaptcha.sitekey'))
+        <script src="https://js.hcaptcha.com/1/api.js" async defer></script>
+    @endif
 
 </x-layouts.guest>

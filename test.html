@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AVKS.cloud - Secure Your Digital Future</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;600&display=swap');
+
+        body {
+            font-family: 'Work Sans', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #000000;
+            color: #ffffff;
+        }
+
+        .container {
+            width: 80%;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            background-color: #45FF2F;
+            color: #000000;
+            padding: 10px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        header .logo h1 {
+            margin: 0;
+        }
+
+        nav ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+        }
+
+        nav ul li {
+            margin-left: 20px;
+        }
+
+        nav ul li a {
+            color: #000000;
+            text-decoration: none;
+        }
+
+        .hero {
+            background-color: #ffffff;
+            color: #000000;
+            padding: 50px 0;
+            text-align: center;
+        }
+
+        .hero h2 {
+            color: #45FF2F;
+        }
+
+        .hero p {
+            font-size: 1.2em;
+        }
+
+        .cta-button {
+            background-color: #45FF2F;
+            color: #000000;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            margin-top: 20px;
+            display: inline-block;
+            transition: transform 0.3s;
+        }
+
+        .cta-button:hover {
+            transform: scale(1.1);
+        }
+
+        .features, .offers, .pricing {
+            background-color: #ffffff;
+            color: #000000;
+            padding: 20px 0;
+            margin-top: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .features ul, .offers ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .features li, .offers li {
+            background-color: #f1f1f1;
+            color: #000000;
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 4px;
+        }
+
+        .pricing-table {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+        }
+
+        .pricing-column {
+            background-color: #ffffff;
+            color: #000000;
+            padding: 20px;
+            margin: 10px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            transition: box-shadow 0.3s;
+            position: relative;
+        }
+
+        .pricing-column:hover {
+            box-shadow: 0 0 20px rgba(69, 255, 47, 0.45);
+        }
+
+        .order-button {
+            background-color: #45FF2F;
+            color: #000000;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            margin-top: 20px;
+            display: inline-block;
+            transition: transform 0.3s;
+        }
+
+        .order-button:hover {
+            transform: scale(1.1);
+        }
+
+        footer {
+            background-color: #45FF2F;
+            color: #000000;
+            text-align: center;
+            padding: 10px 0;
+            margin-top: 20px;
+        }
+
+        footer a {
+            color: #000000;
+            text-decoration: none;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            nav ul {
+                flex-direction: column;
+            }
+
+            nav ul li {
+                margin-left: 0;
+                margin-top: 10px;
+            }
+
+            .pricing-table {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+<header>
+    <div class="container">
+        <div class="logo">
+            <h1>AVKS.cloud</h1>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="#features">Features</a></li>
+                <li><a href="#offers">Offers</a></li>
+                <li><a href="#pricing">Pricing</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+<main>
+    <section class="hero">
+        <div class="container">
+            <h2>Secure Your Digital Future</h2>
+            <p>Comprehensive data storage solutions tailored to meet your unique needs.</p>
+            <a href="#features" class="cta-button">Learn More</a>
+        </div>
+    </section>
+    <section id="features" class="features">
+        <div class="container">
+            <h2>Why Choose Us?</h2>
+            <ul>
+                <li>Flexible Storage Options</li>
+                <li>Competitive Pricing</li>
+                <li>Fast and Reliable Access</li>
+                <li>Unmatched Security</li>
+                <li>Expert Support</li>
+                <li>Transparent Terms</li>
+            </ul>
+        </div>
+    </section>
+    <section id="offers" class="offers">
+        <div class="container">
+            <h2>Special Offers</h2>
+            <ul>
+                <li>First-Time User Discount</li>
+                <li>Referral Program</li>
+            </ul>
+        </div>
+    </section>
+    <section id="pricing" class="pricing">
+        <div class="container">
+            <h2>Pricing Plans</h2>
+            <div class="pricing-table">
+                <div class="pricing-column">
+                    <h3>Personal Use</h3>
+                    <p><strong>Monthly:</strong> $10</p>
+                    <p><strong>Yearly:</strong> $110</p>
+                    <a href="mailto:test@example.com" class="order-button">Order</a>
+                </div>
+                <div class="pricing-column">
+                    <h3>Commercial Use</h3>
+                    <p><strong>Monthly:</strong> $14</p>
+                    <p><strong>Yearly:</strong> $150</p>
+                    <a href="mailto:test@example.com" class="order-button">Order</a>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+<footer id="contact">
+    <div class="container">
+        <p>&copy; 2024 AVKS.cloud. All rights reserved.</p>
+        <p>Contact us at <a href="mailto:test@example.com">test@example.com</a></p>
+    </div>
+</footer>
+<script type="text/javascript">
+    // script.js
+    document.querySelector('.cta-button').addEventListener('click', function(e) {
+        e.preventDefault();
+        document.querySelector(this.getAttribute('href')).scrollIntoView({
+            behavior: 'smooth'
+        });
+    });
+</script>
+</body>
+</html>

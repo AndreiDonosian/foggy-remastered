@@ -4,6 +4,7 @@ namespace App\Helpers;
 
 use App\Models\File;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 
 class PinHelper
 {
@@ -21,7 +22,7 @@ class PinHelper
                     if($fileStored) {
                         $output[] = [
                             'public_path'=>'/build/img/gallery/1.jpg',
-                            'randId'=>sha1(mt_rand(0, time())),
+                            'randId'=>Str::random(40),
                             'meta'=>[
                                 'size'=> number_format(filesize(storage_path('app/storage1/').$subFolders.'/'.$file)/1024/1024,2) . 'MB',
                                 'type'=>mime_content_type(storage_path('app/storage1/').$subFolders.'/'.$file),

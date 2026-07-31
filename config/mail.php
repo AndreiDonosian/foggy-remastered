@@ -100,4 +100,17 @@ return [
         'name' => env('MAIL_FROM_NAME', 'Example'),
     ],
 
+    /*
+    |--------------------------------------------------------------------------
+    | Contact Form Recipient
+    |--------------------------------------------------------------------------
+    |
+    | Messages sent from the public "Contact Us" form are delivered to this
+    | address. Set MAIL_CONTACT_TO in your .env to the inbox that should
+    | receive enquiries. Falls back to the global "from" address.
+    |
+    */
+
+    'contact_to' => env('MAIL_CONTACT_TO', env('MAIL_FROM_ADDRESS', 'hello@example.com')),
+
 ];

@@ -3,18 +3,19 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Str;
 
 class PlanFactory extends Factory
 {
 
-    public function definition()
+    public function definition(): array
     {
         return [
-            'title' => fake()->name(),
-            'price' => fake()->numberBetween(0, 10),
-            'description' => fake()->text(),
+            'title' => fake()->unique()->word(),
+            'description' => fake()->text(200),
+            'features' => fake()->text(120),
+            'price' => fake()->randomFloat(2, 0, 100),
+            'mb_limit' => fake()->numberBetween(10, 102400),
+            'status' => true,
         ];
     }
 }

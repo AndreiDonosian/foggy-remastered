@@ -97,8 +97,8 @@
 	--techwave-border-color: #312e37;
 	--techwave-button-bg-color: #1c1925;
 	--techwave-hover-color: #fff;
-	--techwave-heading-font-family: 'Heebo', sans-serif;
-	--techwave-body-font-family: 'Work Sans', sans-serif;
+	--techwave-heading-font-family: 'Heebo', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+	--techwave-body-font-family: 'Work Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
 	--techwave-left-panel-width: 300px;
 	--techwave-header-height: 100px;
 }
