@@ -125,6 +125,7 @@
                 uploader.settings.multipart_params = {
                     pin : document.querySelector('#pin').value,
                     // crypt : document.querySelector('#cryptCode').value,
+                    _token : '{{ csrf_token() }}',
                     file : file,
                 };
             });

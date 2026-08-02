@@ -72,50 +72,43 @@ class FileController extends Controller
     {
         $_file = FileHelper::getFileByName($name, $pin);
 
-        if ($_file) {
-            if (!file_exists($_file['meta']['path'])) { // file does not exist
-                die('file not found');
-            } else {
-                header("Cache-Control: public");
-                header("Content-Description: File Transfer");
-                header("Content-Disposition: attachment; filename={$_file['meta']['name']}");
-                header("Content-Type: {$_file['meta']['type']}");
-                header("Content-Transfer-Encoding: binary");
-
-                // read the file from disk
-                readfile($_file['meta']['path']);
-            }
-        } else {
+        if (!$_file) {
             abort(401);
         }
+
+        if (!is_file($_file['meta']['path'])) { // file does not exist
+            abort(404);
+        }
+
+        return response()->streamDownload(
+            fn () => readfile($_file['meta']['path']),
+            basename($_file['meta']['name']),
+            ['Content-Type' => $_file['meta']['type']]
+        );
     }
 
     public function readFileEncrypted(string $name, string $pin)
     {
         $_file = FileHelper::getFileByName($name, $pin);
 
-        if ($_file) {
-            if (!file_exists($_file['meta']['path'])) { // file does not exist
-                die('file not found');
-            } else {
-
-                $newPath = explode('.', $_file['meta']['path']);
-                unset($newPath[count($newPath) - 1]);
-                $newPath = join('.', $_file) . '.avks';
-
-                FileHelper::encryptFile($_file['meta']['path'], $newPath, request()->post('key'));
-
-                header("Cache-Control: public");
-                header("Content-Description: File Transfer");
-                header("Content-Disposition: attachment; filename={$_file['meta']['origname']}");
-                header("Content-Type: {$_file['meta']['type']}");
-                header("Content-Transfer-Encoding: binary");
-
-                // read the file from disk
-                readfile($newPath);
-            }
-        } else {
+        if (!$_file) {
             abort(401);
         }
+
+        if (!is_file($_file['meta']['path'])) { // file does not exist
+            abort(404);
+        }
+
+        $newPath = explode('.', $_file['meta']['path']);
+        unset($newPath[count($newPath) - 1]);
+        $newPath = join('.', $newPath) . '.avks';
+
+        FileHelper::encryptFile($_file['meta']['path'], $newPath, request()->post('key'));
+
+        return response()->streamDownload(
+            fn () => readfile($newPath),
+            basename($_file['meta']['origname']),
+            ['Content-Type' => $_file['meta']['type']]
+        );
     }
 }

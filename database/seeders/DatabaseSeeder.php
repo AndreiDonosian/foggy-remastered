@@ -6,6 +6,7 @@ use App\Models\Plan;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
 
 class DatabaseSeeder extends Seeder
 {
@@ -19,7 +20,10 @@ class DatabaseSeeder extends Seeder
         User::factory()->create([
             'name' => 'Test User',
             'email' => 'test@example.com',
-            'password' => bcrypt('test@example.com'),
+            // The User model casts `password` as `hashed`, so it is hashed with
+            // the configured driver (Argon2id) on assignment.
+            'password' => 'test@example.com',
+            'crypt_passcode' => Hash::make('test@example.com'.microtime()),
         ]);
 
         Plan::factory()->create([

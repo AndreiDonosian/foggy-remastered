@@ -13,13 +13,31 @@
         <!-- !Page Title -->
 
         <div class="container small">
+
+            @if (session('status'))
+                <div class="alert alert-success" style="margin-bottom:20px;color:#0f5132;background:#d1e7dd;border:1px solid #badbcc;border-radius:5px;padding:12px 16px;">
+                    {{ session('status') }}
+                </div>
+            @endif
+
+            @if ($errors->any())
+                <div class="alert alert-danger" style="margin-bottom:20px;color:#842029;background:#f8d7da;border:1px solid #f5c2c7;border-radius:5px;padding:12px 16px;">
+                    <ul style="margin:0;padding-left:18px;">
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
+
             <div class="techwave_fn_user_settings">
-                <form>
+                <form action="{{ route('profile.update') }}" method="POST" enctype="multipart/form-data">
+                    @csrf
                     <div class="user__settings">
                         <div class="settings_left">
 
                             <!-- Upload Shortcode -->
-                            <label class="fn__upload">
+                            <label class="fn__upload{{ \Illuminate\Support\Facades\Auth::user()->avatar ? ' has_img' : '' }}">
                                 <span class="upload_content">
                                     <img src="{{ URL::asset('build/svg/upload.svg') }}" alt="" class="fn__svg">
                                     <span class="title">Drag & Drop a Image</span>
@@ -38,7 +56,7 @@
                                     <img src="{{\Illuminate\Support\Facades\Auth::user()->avatar??URL::asset('build/img/user/user.jpg')}}" alt="" class="preview_img">
                                 </span>
 
-                                <input type="file" accept="image/*">
+                                <input type="file" name="avatar" accept="image/*">
                             </label>
                             <!-- !Upload Shortcode -->
 
@@ -48,27 +66,8 @@
                             <div class="item">
                                 <label class="input_label" for="name">Name</label>
                                 <div class="input_item">
-                                    <input class="input" type="text" id="name" value="{{\Illuminate\Support\Facades\Auth::user()->name}}">
+                                    <input class="input" type="text" id="name" name="name" value="{{ old('name', \Illuminate\Support\Facades\Auth::user()->name) }}">
                                 </div>
-                            </div>
-                            <div class="item">
-                                <label class="input_label" for="email">Email Address</label>
-                                <div class="input_item">
-                                    <input class="input" type="text" id="email" value="{{\Illuminate\Support\Facades\Auth::user()->email}}">
-                                </div>
-                            </div>
-                            <div class="item">
-                                <label class="input_label" for="password">Password</label>
-                                <div class="input_item">
-                                    <input class="input" type="password" id="password" value="lqbjSA34a!bh1">
-                                </div>
-                            </div>
-                            <div class="item">
-                                <label class="fn__checkbox">
-                                    <input type="checkbox">I approve all changes
-                                    <span class="checkmark"></span>
-                                    <img src="{{ URL::asset('build/svg/check.svg') }}" alt="" class="fn__svg">
-                                </label>
                             </div>
                             <div class="item">
                                 <label class="fn__submit">
@@ -79,6 +78,58 @@
                     </div>
                 </form>
             </div>
+
+            <!-- Change Email -->
+            <div class="techwave_fn_user_settings" style="margin-top:30px;">
+                <form action="{{ route('profile.email.update') }}" method="POST">
+                    @csrf
+                    <div class="user__settings">
+                        <div class="settings_right" style="width:100%;">
+                            <div class="item">
+                                <label class="input_label" for="email">Email Address</label>
+                                <div class="input_item">
+                                    <input class="input" type="email" id="email" name="email" value="{{ old('email', \Illuminate\Support\Facades\Auth::user()->email) }}">
+                                </div>
+                                <p class="desc" style="margin-top:8px;opacity:.7;">
+                                    Changing your email requires activation. A confirmation link will be sent to the new
+                                    address, and the change only takes effect once you open it. You can change your email once a month.
+                                </p>
+                            </div>
+                            <div class="item">
+                                <label class="fn__submit">
+                                    <input type="submit" value="Send Activation Link">
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <!-- !Change Email -->
+
+            <!-- Change Password -->
+            <div class="techwave_fn_user_settings" style="margin-top:30px;">
+                <form action="{{ route('profile.password.reset') }}" method="POST">
+                    @csrf
+                    <div class="user__settings">
+                        <div class="settings_right" style="width:100%;">
+                            <div class="item">
+                                <label class="input_label">Password</label>
+                                <p class="desc" style="opacity:.7;">
+                                    For your security, passwords can only be changed through a recovery link.
+                                    Click the button below and we will email a password reset link to your address.
+                                </p>
+                            </div>
+                            <div class="item">
+                                <label class="fn__submit">
+                                    <input type="submit" value="Send Password Reset Link">
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <!-- !Change Password -->
+
         </div>
 
     </div>

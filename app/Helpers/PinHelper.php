@@ -10,7 +10,7 @@ class PinHelper
 {
     public static function getPathFolders(string $pin, mixed $contentHidden = true): array
     {
-        $subFolders = self::getSubFolders($pin);
+        $subFolders = self::getStoragePath($pin);
 
         $output = [];
         if(is_dir(storage_path('app/storage1/'.$subFolders))) {
@@ -48,5 +48,32 @@ class PinHelper
             '/'.substr($mainFolder, 3 ,3)
             .'/'. substr($mainFolder, 6 ,3).'/'.
             $mainFolder;
+    }
+
+    /**
+     * Crypted, per-user root folder. It is derived only from the user (never
+     * the pin), so every file a user uploads under any pin lands under this
+     * single hashed directory. The name is a one-way hash, so browsing storage
+     * never reveals which user owns the folder, yet all of a user's files can
+     * be located/managed from one place.
+     */
+    public static function getUserFolder(): string
+    {
+        $user = auth()->user();
+        $userFolder = sha1('foggy_user_'.$user->getAuthIdentifier().$user->getAttribute('crypt_passcode'));
+
+        return substr($userFolder, 0, 3).
+            '/'.substr($userFolder, 3, 3)
+            .'/'.substr($userFolder, 6, 3).'/'.
+            $userFolder;
+    }
+
+    /**
+     * Full storage path for a pin: the crypted user folder followed by the
+     * pin-specific sub-folders.
+     */
+    public static function getStoragePath(string $pin): string
+    {
+        return self::getUserFolder().'/'.self::getSubFolders($pin);
     }
 }

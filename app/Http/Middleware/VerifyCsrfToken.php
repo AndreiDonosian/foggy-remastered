@@ -4,7 +4,9 @@ namespace App\Http\Middleware;
 
 class VerifyCsrfToken extends \Illuminate\Foundation\Http\Middleware\VerifyCsrfToken
 {
-    protected $except = [
-        'pin/*',
-    ];
+    /**
+     * CSRF protection is enforced on every state-changing route. Upload
+     * endpoints receive the token via the `_token` field / X-CSRF-TOKEN header.
+     */
+    protected $except = [];
 }

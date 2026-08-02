@@ -80,6 +80,12 @@ class FileHelper
 
     public static function chunkUploader(int $chunk, int $chunks, $filePath)
     {
+        // Reject anything that is not a genuine PHP multipart upload.
+        if (empty($_FILES['file']['tmp_name'])
+            || ! is_uploaded_file($_FILES['file']['tmp_name'])
+            || ! empty($_FILES['file']['error'])) {
+            return ['success' => false, 'err' => 3];
+        }
 
         $out = fopen("{$filePath}.part", $chunk == 0 ? "wb" : "ab");
         if ($out) {

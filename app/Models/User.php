@@ -19,6 +19,7 @@ class User extends Authenticatable implements MustVerifyEmail
     protected $fillable = [
         'name',
         'email',
+        'avatar',
         'password',
         'crypt_passcode',
     ];
@@ -45,6 +46,11 @@ class User extends Authenticatable implements MustVerifyEmail
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public function emails()
+    {
+        return $this->hasMany(UserEmail::class);
     }
 
     public function getPlan()

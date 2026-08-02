@@ -108,12 +108,12 @@
             <!-- User (bar item) -->
             <div class="bar__item bar__item_user">
                 <a href="javascript:void(0);" class="user_opener fn__tooltip" title="User Profile">
-                    <img src="{{ URL::asset('build/img/user/user.jpg') }}" alt="">
+                    <img src="{{\Illuminate\Support\Facades\Auth::user()->avatar ?? URL::asset('build/img/user/user.jpg') }}" alt="">
                 </a>
                 <div class="item_popup" data-position="right">
                     <div class="user_profile">
                         <div class="user_img">
-                            <img src="{{ URL::asset('build/img/user/user.jpg') }}" alt="">
+                            <img src="{{\Illuminate\Support\Facades\Auth::user()->avatar ?? URL::asset('build/img/user/user.jpg') }}" alt="">
                         </div>
                         <div class="user_info">
                             <h2 class="user_name">{{ Auth::user()->name }}<span>Free</span></h2>

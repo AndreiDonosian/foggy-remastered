@@ -1,0 +1,1 @@
+{"version":2,"defects":[],"times":{"Tests\\Unit\\ExampleTest::test_that_true_is_true":0.004,"Tests\\Feature\\ExampleTest::test_the_application_returns_a_successful_response":0.068,"Tests\\Feature\\AvatarUpdateTest::test_avatar_is_stored_and_saved":0.319}}
